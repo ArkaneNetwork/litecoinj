@@ -993,7 +993,7 @@ public class Block extends BaseMessage {
     }
 
     /**
-     * Create a block sending 50BTC as a coinbase transaction to the public key specified.
+     * Create a block sending 50LTC as a coinbase transaction to the public key specified.
      * This method is intended for test use only.
      *
      * @param version version of the block to create
