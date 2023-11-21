@@ -52,7 +52,7 @@ jobs:
       
       - name: Run with Gradle version ${{ matrix.gradle-version }}
         shell: bash
-        run: gradle build
+        run: gradle build --stacktrace
       
       - name: Version used
         shell: bash
