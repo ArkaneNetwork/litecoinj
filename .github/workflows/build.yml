@@ -58,25 +58,19 @@ jobs:
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
 
-      - name: Generate Asset String and Extract Version
-        id: generate_assets
-        shell: bash
+      - name: Upload JAR files to Nexus Repository
+        env:
+          NEXUS_URL: ${{ secrets.NEXUS_URL }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
         run: |
-          jars=$(ls core/build/libs/*.jar)
-          asset_string=$(echo $jars | sed 's| | extension=jar;filename=|g')
-          # Extract version assuming it's in the format '...-<version>.jar'
-          version=$(echo $jars | sed -n 's/.*litecoinj-core-\(.*\)-SNAPSHOT\.jar/\1/p' | head -1)
-          echo "ASSET_STRING=extension=jar;filename=$asset_string" >> $GITHUB_ENV
-          echo "VERSION=$version-SNAPSHOT" >> $GITHUB_ENV
+          for jar in core/build/libs/*.jar; do
+            filename=$(basename "$jar")
+            # Extract version assuming filename format 'litecoinj-core-<version>.jar'
+            version=$(echo $filename | sed -n 's/litecoinj-core-\(.*\)\.jar/\1/p')
+            # Construct Nexus repository URL with desired path
+            nexus_url="$NEXUS_URL/repository/maven-snapshots/network/arkane/blockchain-providers/litecoinj/$version/$filename"
+            echo "Uploading $filename to $nexus_url"
+            curl -v -u $MAVEN_USERNAME:$MAVEN_PASSWORD --upload-file $jar $nexus_url
+          done
 
-      - name: Nexus Repo Publish
-        uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
-        with:
-          serverUrl: ${{ secrets.NEXUS_URL }}
-          username: ${{ secrets.MAVEN_USERNAME }}
-          password: ${{ secrets.MAVEN_PASSWORD }}
-          format: maven2
-          repository: maven-snapshots
-          assets: ${{ env.ASSET_STRING }}
-          coordinates: |
-            version=${{ env.VERSION }}
