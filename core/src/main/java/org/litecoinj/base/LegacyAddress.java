@@ -61,6 +61,11 @@ public class LegacyAddress implements Address {
     public final boolean p2sh;
 
     /**
+     * True if P2SH and version is 50.
+     */
+    public final boolean p2sh2;
+
+    /**
      * Private constructor. Use {@link #fromBase58(String, Network)},
      * {@link #fromPubKeyHash(Network, byte[])}, {@link #fromScriptHash(Network, byte[])} or
      * {@link ECKey#toAddress(ScriptType, Network)}.
@@ -69,13 +74,18 @@ public class LegacyAddress implements Address {
      * @param p2sh    true if hash160 is hash of a script, false if it is hash of a pubkey
      * @param hash160 20-byte hash of pubkey or script
      */
-    private LegacyAddress(Network network, boolean p2sh, byte[] hash160) throws AddressFormatException {
+    private LegacyAddress(Network network,
+                          boolean p2sh,
+                          boolean p2sh2,
+                          byte[] hash160) throws AddressFormatException {
         this.network = normalizeNetwork(Objects.requireNonNull(network));
         this.bytes = Objects.requireNonNull(hash160);
-        if (hash160.length != 20)
+        if (hash160.length != 20) {
             throw new AddressFormatException.InvalidDataLength(
                     "Legacy addresses are 20 byte (160 bit) hashes, but got: " + hash160.length);
+        }
         this.p2sh = p2sh;
+        this.p2sh2 = p2sh2;
     }
 
     private static Network normalizeNetwork(Network network) {
@@ -92,7 +102,7 @@ public class LegacyAddress implements Address {
     /**
      * Construct a {@link LegacyAddress} that represents the given pubkey hash. The resulting address will be a P2PKH type of
      * address.
-     * 
+     *
      * @param params
      *            network this address is valid for
      * @param hash160
@@ -114,13 +124,13 @@ public class LegacyAddress implements Address {
      * @return constructed address
      */
     public static LegacyAddress fromPubKeyHash(Network network, byte[] hash160) throws AddressFormatException {
-        return new LegacyAddress(network, false, hash160);
+        return new LegacyAddress(network, false, false, hash160);
     }
 
     /**
      * Construct a {@link LegacyAddress} that represents the public part of the given {@link ECKey}. Note that an address is
      * derived from a hash of the public key and is not the public key itself.
-     * 
+     *
      * @param params
      *            network this address is valid for
      * @param key
@@ -135,7 +145,7 @@ public class LegacyAddress implements Address {
 
     /**
      * Construct a {@link LegacyAddress} that represents the given P2SH script hash.
-     * 
+     *
      * @param params
      *            network this address is valid for
      * @param hash160
@@ -156,12 +166,12 @@ public class LegacyAddress implements Address {
      * @return constructed address
      */
     public static LegacyAddress fromScriptHash(Network network, byte[] hash160) throws AddressFormatException {
-        return new LegacyAddress(network, true, hash160);
+        return new LegacyAddress(network, true, false, hash160);
     }
 
     /**
      * Construct a {@link LegacyAddress} from its base58 form.
-     * 
+     *
      * @param params
      *            expected network this address is valid for, or null if if the network should be derived from the
      *            base58
@@ -178,8 +188,8 @@ public class LegacyAddress implements Address {
             throws AddressFormatException, AddressFormatException.WrongNetwork {
         AddressParser parser = DefaultAddressParser.fromNetworks();
         return (LegacyAddress) ((params != null)
-                ? parser.parseAddress(base58, params.network())
-                : parser.parseAddressAnyNetwork(base58));
+                                ? parser.parseAddress(base58, params.network())
+                                : parser.parseAddressAnyNetwork(base58));
     }
 
     /**
@@ -195,10 +205,11 @@ public class LegacyAddress implements Address {
         byte[] versionAndDataBytes = Base58.decodeChecked(base58);
         int version = versionAndDataBytes[0] & 0xFF;
         byte[] bytes = Arrays.copyOfRange(versionAndDataBytes, 1, versionAndDataBytes.length);
-        if (version == network.legacyAddressHeader())
-            return new LegacyAddress(network, false, bytes);
-        else if (version == network.legacyP2SHHeader() || version == network.legacyP2SHHeader2())
-            return new LegacyAddress(network, true, bytes);
+        if (version == network.legacyAddressHeader()) {
+            return new LegacyAddress(network, false, false, bytes);
+        } else if (version == network.legacyP2SHHeader() || version == network.legacyP2SHHeader2()) {
+            return new LegacyAddress(network, true, version == network.legacyP2SHHeader2(), bytes);
+        }
         throw new AddressFormatException.WrongNetwork(version);
     }
 
@@ -214,16 +225,22 @@ public class LegacyAddress implements Address {
 
     /**
      * Get the version header of an address. This is the first byte of a base58 encoded address.
-     * 
+     *
      * @return version header as one byte
      */
     public int getVersion() {
-        return p2sh ? network.legacyP2SHHeader2() : network.legacyAddressHeader();
+        if (p2sh && p2sh2) {
+            return network.legacyP2SHHeader2();
+        }
+        if (p2sh) {
+            return network.legacyP2SHHeader();
+        }
+        return network.legacyAddressHeader();
     }
 
     /**
      * Returns the base58-encoded textual form, including version and checksum bytes.
-     * 
+     *
      * @return textual form
      */
     public String toBase58() {
@@ -239,7 +256,7 @@ public class LegacyAddress implements Address {
     /**
      * Get the type of output script that will be used for sending to the address. This is either
      * {@link ScriptType#P2PKH} or {@link ScriptType#P2SH}.
-     * 
+     *
      * @return type of output script
      */
     @Override
@@ -251,7 +268,7 @@ public class LegacyAddress implements Address {
      * Given an address, examines the version byte and attempts to find a matching NetworkParameters. If you aren't sure
      * which network the address is intended for (eg, it was provided by a user), you can use this to decide if it is
      * compatible with the current wallet.
-     * 
+     *
      * @return network the address is valid for
      * @throws AddressFormatException if the given base58 doesn't parse or the checksum is invalid
      */
@@ -293,14 +310,14 @@ public class LegacyAddress implements Address {
      */
     @Override
     public int compareTo(Address o) {
-       return LEGACY_ADDRESS_COMPARATOR.compare(this, o);
+        return LEGACY_ADDRESS_COMPARATOR.compare(this, o);
     }
 
     /**
      * Address header of legacy P2PKH addresses for standard Bitcoin networks.
      */
     public enum AddressHeader {
-        X0(0, MAINNET),
+        X48(48, MAINNET),
         X111(111, TESTNET, REGTEST),
         X6F(0x6f, SIGNET);
 
@@ -313,9 +330,9 @@ public class LegacyAddress implements Address {
          */
         public static AddressHeader ofNetwork(LitecoinNetwork network) {
             return Stream.of(AddressHeader.values())
-                    .filter(header -> header.networks.contains(network))
-                    .findFirst()
-                    .orElseThrow(IllegalStateException::new);
+                         .filter(header -> header.networks.contains(network))
+                         .findFirst()
+                         .orElseThrow(IllegalStateException::new);
         }
 
         AddressHeader(int headerByte, LitecoinNetwork first, LitecoinNetwork... rest) {
@@ -346,9 +363,9 @@ public class LegacyAddress implements Address {
          */
         public static P2SHHeader ofNetwork(LitecoinNetwork network) {
             return Stream.of(P2SHHeader.values())
-                    .filter(header -> header.networks.contains(network))
-                    .findFirst()
-                    .orElseThrow(IllegalStateException::new);
+                         .filter(header -> header.networks.contains(network))
+                         .findFirst()
+                         .orElseThrow(IllegalStateException::new);
         }
 
         P2SHHeader(int headerByte, LitecoinNetwork first, LitecoinNetwork... rest) {
