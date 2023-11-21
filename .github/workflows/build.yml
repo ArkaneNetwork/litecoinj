@@ -65,12 +65,11 @@ jobs:
           username: ${{ secrets.MAVEN_USERNAME }}
           password: ${{ secrets.MAVEN_PASSWORD }}
           coordinates: groupId=network.arkane.blockchain-providers artifactId=litecoinj version=0.17-SNAPSHOT
-          format: maven2
-          repository: 'maven-snapshots' # or 'maven-snapshots' based on your use case
           assets: |
-            target/core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
-            target/core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
-            target/core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
-
+            extension=jar filename=./core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
+            extension=jar filename=./core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
+            extension=jar filename=./core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
+          format: maven2
+          repository: 'maven-snapshots'
 
 
