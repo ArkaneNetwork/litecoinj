@@ -64,10 +64,8 @@ jobs:
           serverUrl: ${{ secrets.NEXUS_URL }}
           username: ${{ secrets.MAVEN_USERNAME }}
           password: ${{ secrets.MAVEN_PASSWORD }}
-          groupId: 'network.arkane.blockchain-providers'
+          coordinates: groupId=network.arkane.blockchain-providers artifactId=litecoinj version=0.17-SNAPSHOT
           format: maven2
-          artifactId: 'litecoinj'
-          version: '0.17-SNAPSHOT'
           repository: 'maven-snapshots' # or 'maven-snapshots' based on your use case
           assets: |
             target/core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
