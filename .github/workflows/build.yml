@@ -53,4 +53,4 @@ jobs:
       
       - name: Version used
         shell: bash
-      - run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
+        run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
