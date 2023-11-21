@@ -58,18 +58,20 @@ jobs:
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
 
-      - name: Upload JAR files to Nexus Repository
-        env:
-          NEXUS_URL: ${{ secrets.NEXUS_URL }}
-          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-        run: |
-          for jar in core/build/libs/*.jar; do
-            filename=$(basename "$jar")
-            version=$(echo $filename | sed -n 's/litecoinj-core-\(.*\)\.jar/\1/p')
-            nexus_url="$NEXUS_URL/repository/maven-releases/network/arkane/blockchain-providers/litecoinj/$version/$filename"
-            echo "Uploading $filename to $nexus_url"
-            curl -u $MAVEN_USERNAME:$MAVEN_PASSWORD --upload-file $jar $nexus_url
-          done
+      - name: Publish to Nexus Repository
+        uses: sonatype-nexus-community/nexus-repository-publisher-for-github-actions@v1
+        with:
+          serverUrl: ${{ secrets.NEXUS_URL }}
+          username: ${{ secrets.MAVEN_USERNAME }}
+          password: ${{ secrets.MAVEN_PASSWORD }}
+          groupId: 'network.arkane.blockchain-providers'
+          artifactId: 'litecoinj'
+          version: '0.17-SNAPSHOT'
+          repository: 'maven-snapshots' # or 'maven-snapshots' based on your use case
+          assets: |
+            target/core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
+            target/core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
+            target/core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
+
 
 
