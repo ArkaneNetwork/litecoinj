@@ -16,14 +16,13 @@ jobs:
 # Build
 ########################
   build:
-    runs-on:
-      group: builders
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write
     strategy:
       matrix:
-        java-version: [17]
+        gradle-version: [current, release-candidate]
         include:
           - java-version: 17
             gradle-version: current
