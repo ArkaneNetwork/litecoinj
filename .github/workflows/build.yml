@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.MAVEN_USERNAME }}
           password: ${{ secrets.MAVEN_PASSWORD }}
           format: maven2
-          repository: maven-releases
+          repository: maven-snapshots
           assets: |
             extension=jar;filename=${{ env.LITECOINJ_CORE_JAVADOC }}
             extension=jar;filename=${{ env.LITECOINJ_CORE_SOURCES }}
