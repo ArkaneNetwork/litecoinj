@@ -58,13 +58,16 @@ jobs:
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
 
-      - name: Generate Asset String
+      - name: Generate Asset String and Extract Version
         id: generate_assets
         shell: bash
         run: |
           jars=$(ls core/build/libs/*.jar)
           asset_string=$(echo $jars | sed 's| | extension=jar;filename=|g')
+          # Extract version assuming it's in the format '...-<version>.jar'
+          version=$(echo $jars | sed -n 's/.*litecoinj-core-\(.*\)-SNAPSHOT\.jar/\1/p' | head -1)
           echo "ASSET_STRING=extension=jar;filename=$asset_string" >> $GITHUB_ENV
+          echo "VERSION=$version-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Nexus Repo Publish
         uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
@@ -75,3 +78,5 @@ jobs:
           format: maven2
           repository: maven-snapshots
           assets: ${{ env.ASSET_STRING }}
+          coordinates: |
+            version=${{ env.VERSION }}
