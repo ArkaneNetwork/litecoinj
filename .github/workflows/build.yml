@@ -59,7 +59,7 @@ jobs:
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
 
       - name: Publish to Nexus Repository
-        uses: sonatype-nexus-community/nexus-repository-publisher-for-github-actions@v1
+        uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
         with:
           serverUrl: ${{ secrets.NEXUS_URL }}
           username: ${{ secrets.MAVEN_USERNAME }}
