@@ -16,7 +16,7 @@
 
 package org.litecoinj.core;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 public class NetworkParametersTest {
     @Test
     public void deprecatedMembers() {
-        NetworkParameters params = NetworkParameters.of(BitcoinNetwork.MAINNET);
+        NetworkParameters params = NetworkParameters.of(LitecoinNetwork.MAINNET);
         assertEquals(70000, params.getProtocolVersionNum(ProtocolVersion.MINIMUM));
     }
 }

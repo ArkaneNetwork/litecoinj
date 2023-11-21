@@ -18,7 +18,7 @@
 package org.litecoinj.wallet;
 
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.crypto.AesKey;
 import org.litecoinj.core.BloomFilter;
@@ -69,16 +69,16 @@ public class KeyChainGroupTest {
     public void setup() {
         BriefLogFormatter.init();
         TimeUtils.setMockClock();
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).lookaheadSize(LOOKAHEAD_SIZE).fromRandom(ScriptType.P2PKH)
-                .build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).lookaheadSize(LOOKAHEAD_SIZE).fromRandom(ScriptType.P2PKH)
+                             .build();
         group.getActiveKeyChain();  // Force create a chain.
 
-        watchingAccountKey = DeterministicKey.deserializeB58(null, XPUB, BitcoinNetwork.MAINNET);
+        watchingAccountKey = DeterministicKey.deserializeB58(null, XPUB, LitecoinNetwork.MAINNET);
     }
 
     @Test
     public void createDeterministic_P2PKH() {
-        KeyChainGroup kcg = KeyChainGroup.builder(BitcoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).build();
+        KeyChainGroup kcg = KeyChainGroup.builder(LitecoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).build();
         // check default
         Address address = kcg.currentAddress(KeyPurpose.RECEIVE_FUNDS);
         assertEquals(ScriptType.P2PKH, address.getOutputScriptType());
@@ -86,7 +86,7 @@ public class KeyChainGroupTest {
 
     @Test
     public void createDeterministic_P2WPKH() {
-        KeyChainGroup kcg = KeyChainGroup.builder(BitcoinNetwork.MAINNET).fromRandom(ScriptType.P2WPKH).build();
+        KeyChainGroup kcg = KeyChainGroup.builder(LitecoinNetwork.MAINNET).fromRandom(ScriptType.P2WPKH).build();
         // check default
         Address address = kcg.currentAddress(KeyPurpose.RECEIVE_FUNDS);
         assertEquals(ScriptType.P2WPKH, address.getOutputScriptType());
@@ -254,7 +254,7 @@ public class KeyChainGroupTest {
 
     @Test
     public void encryptionWhilstEmpty() {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).lookaheadSize(5).fromRandom(ScriptType.P2PKH).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).lookaheadSize(5).fromRandom(ScriptType.P2PKH).build();
         group.encrypt(KEY_CRYPTER, AES_KEY);
         assertTrue(group.freshKey(KeyChain.KeyPurpose.RECEIVE_FUNDS).isEncrypted());
         final ECKey key = group.currentKey(KeyChain.KeyPurpose.RECEIVE_FUNDS);
@@ -324,7 +324,7 @@ public class KeyChainGroupTest {
     public void serialization() throws Exception {
         int initialKeys = INITIAL_KEYS + group.getActiveKeyChain().getAccountPath().size() - 1;
         assertEquals(initialKeys + 1 /* for the seed */, group.serializeToProtobuf().size());
-        group = KeyChainGroup.fromProtobufUnencrypted(BitcoinNetwork.MAINNET, group.serializeToProtobuf());
+        group = KeyChainGroup.fromProtobufUnencrypted(LitecoinNetwork.MAINNET, group.serializeToProtobuf());
         group.freshKey(KeyChain.KeyPurpose.RECEIVE_FUNDS);
         DeterministicKey key1 = group.freshKey(KeyChain.KeyPurpose.RECEIVE_FUNDS);
         DeterministicKey key2 = group.freshKey(KeyChain.KeyPurpose.CHANGE);
@@ -335,20 +335,20 @@ public class KeyChainGroupTest {
         List<Protos.Key> protoKeys2 = group.serializeToProtobuf();
         assertEquals(initialKeys + ((LOOKAHEAD_SIZE + 1) * 2) + 1 /* for the seed */ + 2, protoKeys2.size());
 
-        group = KeyChainGroup.fromProtobufUnencrypted(BitcoinNetwork.MAINNET, protoKeys1);
+        group = KeyChainGroup.fromProtobufUnencrypted(LitecoinNetwork.MAINNET, protoKeys1);
         assertEquals(initialKeys + ((LOOKAHEAD_SIZE + 1)  * 2)  + 1 /* for the seed */ + 1, protoKeys1.size());
         assertTrue(group.hasKey(key1));
         assertTrue(group.hasKey(key2));
         assertEquals(key2, group.currentKey(KeyChain.KeyPurpose.CHANGE));
         assertEquals(key1, group.currentKey(KeyChain.KeyPurpose.RECEIVE_FUNDS));
-        group = KeyChainGroup.fromProtobufUnencrypted(BitcoinNetwork.MAINNET, protoKeys2);
+        group = KeyChainGroup.fromProtobufUnencrypted(LitecoinNetwork.MAINNET, protoKeys2);
         assertEquals(initialKeys + ((LOOKAHEAD_SIZE + 1) * 2) + 1 /* for the seed */ + 2, protoKeys2.size());
         assertTrue(group.hasKey(key1));
         assertTrue(group.hasKey(key2));
 
         group.encrypt(KEY_CRYPTER, AES_KEY);
         List<Protos.Key> protoKeys3 = group.serializeToProtobuf();
-        group = KeyChainGroup.fromProtobufEncrypted(BitcoinNetwork.MAINNET, protoKeys3, KEY_CRYPTER);
+        group = KeyChainGroup.fromProtobufEncrypted(LitecoinNetwork.MAINNET, protoKeys3, KEY_CRYPTER);
         assertTrue(group.isEncrypted());
         assertTrue(group.checkPassword("password"));
         group.decrypt(AES_KEY);
@@ -358,14 +358,14 @@ public class KeyChainGroupTest {
 
     @Test
     public void serializeWatching() throws Exception {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).lookaheadSize(LOOKAHEAD_SIZE).addChain(DeterministicKeyChain.builder()
-                .watch(watchingAccountKey).outputScriptType(ScriptType.P2PKH).build()).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).lookaheadSize(LOOKAHEAD_SIZE).addChain(DeterministicKeyChain.builder()
+                                                                                                                           .watch(watchingAccountKey).outputScriptType(ScriptType.P2PKH).build()).build();
         group.freshKey(KeyChain.KeyPurpose.RECEIVE_FUNDS);
         group.freshKey(KeyChain.KeyPurpose.CHANGE);
         group.getBloomFilterElementCount();  // Force lookahead.
         List<Protos.Key> protoKeys1 = group.serializeToProtobuf();
         assertEquals(3 + (group.getLookaheadSize() + group.getLookaheadThreshold() + 1) * 2, protoKeys1.size());
-        group = KeyChainGroup.fromProtobufUnencrypted(BitcoinNetwork.MAINNET, protoKeys1);
+        group = KeyChainGroup.fromProtobufUnencrypted(LitecoinNetwork.MAINNET, protoKeys1);
         assertEquals(3 + (group.getLookaheadSize() + group.getLookaheadThreshold() + 1) * 2, group.serializeToProtobuf().size());
     }
 
@@ -373,9 +373,9 @@ public class KeyChainGroupTest {
     public void constructFromSeed() {
         ECKey key1 = group.freshKey(KeyChain.KeyPurpose.RECEIVE_FUNDS);
         final DeterministicSeed seed = Objects.requireNonNull(group.getActiveKeyChain().getSeed());
-        KeyChainGroup group2 = KeyChainGroup.builder(BitcoinNetwork.MAINNET).lookaheadSize(5)
-                .addChain(DeterministicKeyChain.builder().seed(seed).outputScriptType(ScriptType.P2PKH).build())
-                .build();
+        KeyChainGroup group2 = KeyChainGroup.builder(LitecoinNetwork.MAINNET).lookaheadSize(5)
+                                            .addChain(DeterministicKeyChain.builder().seed(seed).outputScriptType(ScriptType.P2PKH).build())
+                                            .build();
         ECKey key2 = group2.freshKey(KeyChain.KeyPurpose.RECEIVE_FUNDS);
         assertEquals(key1, key2);
     }
@@ -385,7 +385,7 @@ public class KeyChainGroupTest {
         DeterministicSeed seed = DeterministicSeed.ofEntropy(ENTROPY, "");
         DeterministicKeyChain chain1 = DeterministicKeyChain.builder().seed(seed)
                 .accountPath(DeterministicKeyChain.ACCOUNT_ZERO_PATH).outputScriptType(ScriptType.P2PKH).build();
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).addChain(chain1).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).addChain(chain1).build();
         assertEquals("1M5T5k9yKtGWRtWYMjQtGx3K2sshrABzCT", group.currentAddress(KeyPurpose.RECEIVE_FUNDS).toString());
 
         final DeterministicKeyChain chain2 = DeterministicKeyChain.builder().seed(seed)
@@ -404,7 +404,7 @@ public class KeyChainGroupTest {
     @Test(expected = DeterministicUpgradeRequiredException.class)
     public void deterministicUpgradeRequired() {
         // Check that if we try to use HD features in a KCG that only has random keys, we get an exception.
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).build();
         group.importKeys(new ECKey(), new ECKey());
         assertTrue(group.isDeterministicUpgradeRequired(ScriptType.P2PKH, null));
         assertTrue(group.isDeterministicUpgradeRequired(ScriptType.P2WPKH, null));
@@ -413,7 +413,7 @@ public class KeyChainGroupTest {
 
     @Test
     public void deterministicUpgradeUnencrypted() throws Exception {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).lookaheadSize(LOOKAHEAD_SIZE).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).lookaheadSize(LOOKAHEAD_SIZE).build();
 
         List<Protos.Key> protobufs = group.serializeToProtobuf();
         group.upgradeToDeterministic(ScriptType.P2PKH, KeyChainGroupStructure.BIP32, null, null);
@@ -424,7 +424,7 @@ public class KeyChainGroupTest {
         DeterministicSeed seed1 = group.getActiveKeyChain().getSeed();
         assertNotNull(seed1);
 
-        group = KeyChainGroup.fromProtobufUnencrypted(BitcoinNetwork.MAINNET, protobufs);
+        group = KeyChainGroup.fromProtobufUnencrypted(LitecoinNetwork.MAINNET, protobufs);
         group.upgradeToDeterministic(ScriptType.P2PKH, KeyChainGroupStructure.BIP32, null, null);  // Should give same result as last time.
         assertFalse(group.isEncrypted());
         assertFalse(group.isDeterministicUpgradeRequired(ScriptType.P2PKH, null));
@@ -437,7 +437,7 @@ public class KeyChainGroupTest {
 
     @Test
     public void deterministicUpgradeEncrypted() throws Exception {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).build();
         group.encrypt(KEY_CRYPTER, AES_KEY);
         assertTrue(group.isEncrypted());
         assertFalse(group.isDeterministicUpgradeRequired(ScriptType.P2PKH, null));
@@ -460,7 +460,7 @@ public class KeyChainGroupTest {
 
     @Test
     public void isNotWatching() {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).fromRandom(ScriptType.P2PKH).build();
         final ECKey key = ECKey.fromPrivate(BigInteger.TEN);
         group.importKeys(key);
         assertFalse(group.isWatching());
@@ -468,10 +468,10 @@ public class KeyChainGroupTest {
 
     @Test
     public void isWatching() {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET)
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET)
                 .addChain(DeterministicKeyChain.builder().watch(DeterministicKey.deserializeB58(
                         "xpub69bjfJ91ikC5ghsqsVDHNq2dRGaV2HHVx7Y9LXi27LN9BWWAXPTQr4u8U3wAtap8bLdHdkqPpAcZmhMS5SnrMQC4ccaoBccFhh315P4UYzo",
-                        BitcoinNetwork.MAINNET)).outputScriptType(ScriptType.P2PKH).build())
+                        LitecoinNetwork.MAINNET)).outputScriptType(ScriptType.P2PKH).build())
                 .build();
         final ECKey watchingKey = ECKey.fromPublicOnly(new ECKey());
         group.importKeys(watchingKey);
@@ -480,16 +480,16 @@ public class KeyChainGroupTest {
 
     @Test(expected = IllegalStateException.class)
     public void isWatchingNoKeys() {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).build();
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).build();
         group.isWatching();
     }
 
     @Test(expected = IllegalStateException.class)
     public void isWatchingMixedKeys() {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET)
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET)
                 .addChain(DeterministicKeyChain.builder().watch(DeterministicKey.deserializeB58(
                         "xpub69bjfJ91ikC5ghsqsVDHNq2dRGaV2HHVx7Y9LXi27LN9BWWAXPTQr4u8U3wAtap8bLdHdkqPpAcZmhMS5SnrMQC4ccaoBccFhh315P4UYzo",
-                        BitcoinNetwork.MAINNET)).outputScriptType(ScriptType.P2PKH).build())
+                        LitecoinNetwork.MAINNET)).outputScriptType(ScriptType.P2PKH).build())
                 .build();
         final ECKey key = ECKey.fromPrivate(BigInteger.TEN);
         group.importKeys(key);
@@ -498,17 +498,17 @@ public class KeyChainGroupTest {
 
     @Test
     public void segwitKeyChainGroup() throws Exception {
-        group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).lookaheadSize(LOOKAHEAD_SIZE)
-                .addChain(DeterministicKeyChain.builder().entropy(ENTROPY, TimeUtils.currentTime()).outputScriptType(ScriptType.P2WPKH)
+        group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).lookaheadSize(LOOKAHEAD_SIZE)
+                             .addChain(DeterministicKeyChain.builder().entropy(ENTROPY, TimeUtils.currentTime()).outputScriptType(ScriptType.P2WPKH)
                         .accountPath(DeterministicKeyChain.ACCOUNT_ONE_PATH).build())
-                .build();
+                             .build();
         assertEquals(ScriptType.P2WPKH, group.getActiveKeyChain().getOutputScriptType());
         assertEquals("bc1qhcurdec849thpjjp3e27atvya43gy2snrechd9",
                 group.currentAddress(KeyPurpose.RECEIVE_FUNDS).toString());
         assertEquals("bc1qw8sf3mwuwn74qnhj83gjg0cwkk78fun2pxl9t2", group.currentAddress(KeyPurpose.CHANGE).toString());
 
         // round-trip through protobuf
-        group = KeyChainGroup.fromProtobufUnencrypted(BitcoinNetwork.MAINNET, group.serializeToProtobuf());
+        group = KeyChainGroup.fromProtobufUnencrypted(LitecoinNetwork.MAINNET, group.serializeToProtobuf());
         assertEquals(ScriptType.P2WPKH, group.getActiveKeyChain().getOutputScriptType());
         assertEquals("bc1qhcurdec849thpjjp3e27atvya43gy2snrechd9",
                 group.currentAddress(KeyPurpose.RECEIVE_FUNDS).toString());
@@ -522,7 +522,7 @@ public class KeyChainGroupTest {
         assertEquals("bc1qw8sf3mwuwn74qnhj83gjg0cwkk78fun2pxl9t2", group.currentAddress(KeyPurpose.CHANGE).toString());
 
         // round-trip encrypted again, then dectypt
-        group = KeyChainGroup.fromProtobufEncrypted(BitcoinNetwork.MAINNET, group.serializeToProtobuf(), KEY_CRYPTER);
+        group = KeyChainGroup.fromProtobufEncrypted(LitecoinNetwork.MAINNET, group.serializeToProtobuf(), KEY_CRYPTER);
         group.decrypt(AES_KEY);
         assertEquals(ScriptType.P2WPKH, group.getActiveKeyChain().getOutputScriptType());
         assertEquals("bc1qhcurdec849thpjjp3e27atvya43gy2snrechd9",
@@ -532,7 +532,7 @@ public class KeyChainGroupTest {
 
     @Test
     public void onlyBasicKeyEncryptionAndDecryption() {
-        group = KeyChainGroup.createBasic(BitcoinNetwork.MAINNET);
+        group = KeyChainGroup.createBasic(LitecoinNetwork.MAINNET);
         final ECKey key = ECKey.fromPrivate(BigInteger.TEN);
         group.importKeys(key);
         group.encrypt(KEY_CRYPTER, AES_KEY);

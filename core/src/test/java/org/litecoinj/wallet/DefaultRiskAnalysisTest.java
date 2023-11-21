@@ -17,7 +17,7 @@
 
 package org.litecoinj.wallet;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.ByteUtils;
@@ -63,7 +63,7 @@ public class DefaultRiskAnalysisTest {
     @Before
     public void setup() {
         Context.propagate(new Context());
-        wallet = Wallet.createDeterministic(BitcoinNetwork.MAINNET, ScriptType.P2PKH);
+        wallet = Wallet.createDeterministic(LitecoinNetwork.MAINNET, ScriptType.P2PKH);
         wallet.setLastBlockSeenHeight(1000);
         wallet.setLastBlockSeenTime(Instant.ofEpochSecond(TIMESTAMP));
     }

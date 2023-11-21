@@ -21,7 +21,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.WireFormat;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.Network;
 import org.litecoinj.core.LockTime;
@@ -38,7 +38,7 @@ import org.litecoinj.core.TransactionOutput;
 import org.litecoinj.core.TransactionWitness;
 import org.litecoinj.crypto.KeyCrypter;
 import org.litecoinj.crypto.KeyCrypterScrypt;
-import org.litecoinj.params.BitcoinNetworkParams;
+import org.litecoinj.params.LitecoinNetworkParams;
 import org.litecoinj.script.Script;
 import org.litecoinj.script.ScriptException;
 import org.litecoinj.utils.ExchangeRate;
@@ -445,7 +445,7 @@ public class WalletProtobufSerializer {
         try {
             Protos.Wallet walletProto = parseToProto(input);
             final String paramsID = walletProto.getNetworkIdentifier();
-            Network network = BitcoinNetwork.fromIdString(paramsID).orElseThrow(() ->
+            Network network = LitecoinNetwork.fromIdString(paramsID).orElseThrow(() ->
                     new UnreadableWalletException("Unknown network parameters ID " + paramsID));
             return readWallet(network, extensions, walletProto, forceReset);
         } catch (IOException | IllegalArgumentException | IllegalStateException e) {
@@ -860,7 +860,7 @@ public class WalletProtobufSerializer {
             if (field != 1) // network_identifier
                 return false;
             final String network = cis.readString();
-            return BitcoinNetworkParams.fromID(network) != null;
+            return LitecoinNetworkParams.fromID(network) != null;
         } catch (IOException x) {
             return false;
         }

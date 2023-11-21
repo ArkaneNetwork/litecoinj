@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
-import static org.litecoinj.base.BitcoinNetwork.MAX_MONEY;
+import static org.litecoinj.base.LitecoinNetwork.MAX_MONEY;
 import static org.litecoinj.base.Coin.CENT;
 import static org.litecoinj.base.Coin.COIN;
 import static org.litecoinj.base.Coin.FIFTY_COINS;

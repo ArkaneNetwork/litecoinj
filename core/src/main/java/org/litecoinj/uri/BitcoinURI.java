@@ -16,7 +16,7 @@
 
 package org.litecoinj.uri;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.exceptions.AddressFormatException;
 import org.litecoinj.base.Coin;
@@ -87,10 +87,10 @@ public class BitcoinURI {
 
     /**
      * URI Scheme for Bitcoin network.
-     * @deprecated Use {@link BitcoinNetwork#BITCOIN_SCHEME}.
+     * @deprecated Use {@link LitecoinNetwork#BITCOIN_SCHEME}.
      */
     @Deprecated
-    public static final String BITCOIN_SCHEME = BitcoinNetwork.BITCOIN_SCHEME;
+    public static final String BITCOIN_SCHEME = LitecoinNetwork.BITCOIN_SCHEME;
     private static final String ENCODED_SPACE_CHARACTER = "%20";
     private static final String AMPERSAND_SEPARATOR = "&";
     private static final String QUESTION_MARK_SEPARATOR = "?";
@@ -141,8 +141,8 @@ public class BitcoinURI {
         Objects.requireNonNull(input);
 
         String scheme = network != null ?
-                network.uriScheme() :
-                BitcoinNetwork.BITCOIN_SCHEME;
+                        network.uriScheme() :
+                        LitecoinNetwork.BITCOIN_SCHEME;
 
         // Attempt to form the URI (fail fast syntax checking to official standards).
         URI uri;

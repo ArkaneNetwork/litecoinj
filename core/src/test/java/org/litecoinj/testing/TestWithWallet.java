@@ -16,7 +16,7 @@
 
 package org.litecoinj.testing;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.core.AbstractBlockChain;
@@ -69,7 +69,7 @@ public class TestWithWallet {
     public void setUp() throws Exception {
         BriefLogFormatter.init();
         Context.propagate(new Context(100, Coin.ZERO, false, true));
-        wallet = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH, KeyChainGroupStructure.BIP32);
+        wallet = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH, KeyChainGroupStructure.BIP32);
         myKey = wallet.freshReceiveKey();
         myAddress = wallet.freshReceiveAddress(ScriptType.P2PKH);
         blockStore = new MemoryBlockStore(TESTNET.getGenesisBlock());

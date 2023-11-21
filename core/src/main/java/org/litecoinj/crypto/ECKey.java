@@ -23,7 +23,7 @@ import org.litecoin.NativeSecp256k1;
 import org.litecoin.NativeSecp256k1Util;
 import org.litecoin.Secp256k1Context;
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.LegacyAddress;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.ScriptType;
@@ -1301,7 +1301,7 @@ public class ECKey implements EncryptableItem {
 
     @Override
     public String toString() {
-        return toString(false, null, BitcoinNetwork.MAINNET);
+        return toString(false, null, LitecoinNetwork.MAINNET);
     }
 
     /**
@@ -1373,7 +1373,7 @@ public class ECKey implements EncryptableItem {
      */
     @Deprecated
     private String toString(boolean includePrivate, @Nullable AesKey aesKey, @Nullable NetworkParameters params) {
-        Network network = (params != null) ? params.network() : BitcoinNetwork.MAINNET;
+        Network network = (params != null) ? params.network() : LitecoinNetwork.MAINNET;
         return toString(includePrivate, aesKey, network);
     }
 

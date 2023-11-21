@@ -20,7 +20,7 @@ import org.litecoinj.base.Network;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.core.Context;
 import org.litecoinj.crypto.HDPath;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,8 +34,8 @@ import java.util.stream.Stream;
 
 import static org.litecoinj.base.ScriptType.P2PKH;
 import static org.litecoinj.base.ScriptType.P2WPKH;
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 import static org.litecoinj.wallet.KeyChainGroupStructure.BIP43;
 import static org.litecoinj.wallet.KeyChainGroupStructure.BIP32;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,7 +57,7 @@ public class WalletAccountPathTest {
     @MethodSource("walletStructureParams")
     @ParameterizedTest(name = "path {1} generated for {2}, {3}")
     void walletStructurePathTest2(KeyChainGroupStructure structure, HDPath expectedPath, ScriptType scriptType,
-                                  BitcoinNetwork network) throws IOException, UnreadableWalletException {
+                                  LitecoinNetwork network) throws IOException, UnreadableWalletException {
         // When we create a wallet with parameterized structure, network, and scriptType
         Wallet wallet = createWallet(walletFile, network, structure, scriptType);
 

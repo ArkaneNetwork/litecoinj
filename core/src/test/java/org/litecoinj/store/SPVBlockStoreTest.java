@@ -17,7 +17,7 @@
 
 package org.litecoinj.store;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Address;
 import org.litecoinj.base.internal.PlatformUtils;
@@ -66,7 +66,7 @@ public class SPVBlockStoreTest {
         Context.propagate(new Context(100, Transaction.DEFAULT_TX_FEE, false, true));
         SPVBlockStore store = new SPVBlockStore(TESTNET, blockStoreFile);
 
-        Address to = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address to = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         // Check the first block in a new store is the genesis block.
         StoredBlock genesis = store.getChainHead();
         assertEquals(TESTNET.getGenesisBlock(), genesis.getHeader());
@@ -111,7 +111,7 @@ public class SPVBlockStoreTest {
     @Test
     public void twoStores_sequentially_grow() throws Exception {
         Context.propagate(new Context(100, Transaction.DEFAULT_TX_FEE, false, true));
-        Address to = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address to = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         SPVBlockStore store = new SPVBlockStore(TESTNET, blockStoreFile, 10, true);
         final StoredBlock block0 = store.getChainHead();
         final StoredBlock block1 = block0.build(block0.getHeader().createNextBlock(to).cloneAsHeader());
@@ -167,7 +167,7 @@ public class SPVBlockStoreTest {
         SPVBlockStore store = new SPVBlockStore(TESTNET, blockStoreFile);
 
         // Build a new block.
-        Address to = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address to = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         StoredBlock genesis = store.getChainHead();
         StoredBlock b1 = genesis.build(genesis.getHeader().createNextBlock(to).cloneAsHeader());
         store.put(b1);

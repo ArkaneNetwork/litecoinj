@@ -17,7 +17,7 @@
 package org.litecoinj.examples;
 
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.core.*;
 import org.litecoinj.kits.WalletAppKit;
 import org.litecoinj.utils.BriefLogFormatter;
@@ -36,7 +36,7 @@ import static org.litecoinj.base.Coin.*;
 public class DoubleSpend {
     public static void main(String[] args) throws Exception {
         BriefLogFormatter.init();
-        WalletAppKit kit = WalletAppKit.launch(BitcoinNetwork.REGTEST, new File("."), "doublespend", (k) ->
+        WalletAppKit kit = WalletAppKit.launch(LitecoinNetwork.REGTEST, new File("."), "doublespend", (k) ->
             k.setAutoSave(false)
         );
 

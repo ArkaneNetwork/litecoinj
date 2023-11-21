@@ -16,7 +16,7 @@
 
 package org.litecoinj.tools;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.core.*;
@@ -47,7 +47,7 @@ public class TestFeeLevel {
         Coin feeRateToTest = Coin.valueOf(Long.parseLong(args[0]));
         System.out.println("Fee rate to test is " + feeRateToTest.toFriendlyString() + "/kB");
 
-        kit = new WalletAppKit(BitcoinNetwork.MAINNET, ScriptType.P2WPKH, KeyChainGroupStructure.BIP32, new File("."), "testfeelevel");
+        kit = new WalletAppKit(LitecoinNetwork.MAINNET, ScriptType.P2WPKH, KeyChainGroupStructure.BIP32, new File("."), "testfeelevel");
         kit.startAsync();
         kit.awaitRunning();
         try {

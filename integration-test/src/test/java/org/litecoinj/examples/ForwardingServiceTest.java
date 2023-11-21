@@ -16,7 +16,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Address;
 import org.litecoinj.core.Context;
@@ -29,12 +29,12 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
 
 /**
- * Forwarding Service Functional/Integration test. Uses {@link BitcoinNetwork#TESTNET} so is {@code @Disabled}.
+ * Forwarding Service Functional/Integration test. Uses {@link LitecoinNetwork#TESTNET} so is {@code @Disabled}.
  * To run this test comment-out the {@code @Disabled} annotation.
  */
 @Disabled
 public class ForwardingServiceTest {
-    static final BitcoinNetwork network = BitcoinNetwork.TESTNET;
+    static final LitecoinNetwork network = LitecoinNetwork.TESTNET;
     static final Address forwardingAddress = new ECKey().toAddress(ScriptType.P2WPKH, network);
     static final String[] args = new String[] { forwardingAddress.toString(), network.toString() };
 

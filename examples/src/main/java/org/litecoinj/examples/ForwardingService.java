@@ -16,7 +16,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Sha256Hash;
 import org.litecoinj.base.Address;
 import org.litecoinj.base.Coin;
@@ -47,7 +47,7 @@ public class ForwardingService implements Closeable {
     static final int REQUIRED_CONFIRMATIONS = 1;
     static final int MAX_CONNECTIONS = 4;
     private final AddressParser addressParser = new DefaultAddressParser();
-    private final BitcoinNetwork network;
+    private final LitecoinNetwork network;
     private final Address forwardingAddress;
     private volatile WalletAppKit kit;
 
@@ -83,12 +83,12 @@ public class ForwardingService implements Closeable {
     public ForwardingService(String[] args) {
         if (args.length >= 2) {
             // If network was specified, validate address against network
-            network = BitcoinNetwork.fromString(args[1]).orElseThrow();
+            network = LitecoinNetwork.fromString(args[1]).orElseThrow();
             forwardingAddress = addressParser.parseAddress(args[0], network);
         } else {
             // Else network not-specified, extract network from address
             forwardingAddress = addressParser.parseAddressAnyNetwork(args[0]);
-            network = (BitcoinNetwork) forwardingAddress.network();
+            network = (LitecoinNetwork) forwardingAddress.network();
         }
     }
 
@@ -163,7 +163,7 @@ public class ForwardingService implements Closeable {
             );
     }
 
-    static String getPrefix(BitcoinNetwork network) {
+    static String getPrefix(LitecoinNetwork network) {
         return String.format("forwarding-service-%s", network.toString());
     }
 

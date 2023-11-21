@@ -16,7 +16,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.core.listeners.DownloadProgressTracker;
@@ -36,7 +36,7 @@ import java.time.Instant;
 public class RestoreFromSeed {
 
     public static void main(String[] args) throws Exception {
-        Network network = BitcoinNetwork.TESTNET;
+        Network network = LitecoinNetwork.TESTNET;
         NetworkParameters params = NetworkParameters.of(network);
 
         // Bitcoinj supports hierarchical deterministic wallets (or "HD Wallets"): https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki

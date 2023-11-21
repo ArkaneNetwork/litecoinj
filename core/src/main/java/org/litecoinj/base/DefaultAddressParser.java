@@ -34,14 +34,14 @@ public class DefaultAddressParser implements AddressParser {
 
     // Networks to try when parsing segwit addresses
     public static final List<Network> DEFAULT_NETWORKS_SEGWIT = unmodifiableList(
-                                                                    BitcoinNetwork.MAINNET,
-                                                                    BitcoinNetwork.TESTNET,
-                                                                    BitcoinNetwork.REGTEST);
+            LitecoinNetwork.MAINNET,
+            LitecoinNetwork.TESTNET,
+            LitecoinNetwork.REGTEST);
 
     // Networks to try when parsing legacy (base58) addresses
     public static final List<Network> DEFAULT_NETWORKS_LEGACY = unmodifiableList(
-                                                                    BitcoinNetwork.MAINNET,
-                                                                    BitcoinNetwork.TESTNET);
+            LitecoinNetwork.MAINNET,
+            LitecoinNetwork.TESTNET);
 
     // Networks to search when parsing segwit addresses
     private final List<Network> segwitNetworks;

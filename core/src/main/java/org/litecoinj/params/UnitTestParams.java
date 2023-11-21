@@ -17,7 +17,7 @@
 
 package org.litecoinj.params;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.base.internal.ByteUtils;
 import org.litecoinj.core.Block;
@@ -26,7 +26,7 @@ import org.litecoinj.core.Block;
  * Network parameters used by the bitcoinj unit tests (and potentially your own). This lets you solve a block using
  * {@link Block#solve()} by setting difficulty to the easiest possible.
  */
-public class UnitTestParams extends BitcoinNetworkParams {
+public class UnitTestParams extends LitecoinNetworkParams {
     public static final int UNITNET_MAJORITY_WINDOW = 8;
     public static final int TESTNET_MAJORITY_REJECT_BLOCK_OUTDATED = 6;
     public static final int TESTNET_MAJORITY_ENFORCE_BLOCK_UPGRADE = 4;
@@ -34,7 +34,7 @@ public class UnitTestParams extends BitcoinNetworkParams {
     public UnitTestParams() {
         // Unit Test Params are BY DEFINITION on the Bitcoin TEST network (i.e. not REGTEST or SIGNET)
         // This means that tests that run against UnitTestParams expect TEST network behavior.
-        super(BitcoinNetwork.TESTNET);
+        super(LitecoinNetwork.TESTNET);
 
         targetTimespan = 200000000;  // 6 years. Just a very big number.
         maxTarget = ByteUtils.decodeCompactBits(Block.EASIEST_DIFFICULTY_TARGET);

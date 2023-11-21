@@ -51,8 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

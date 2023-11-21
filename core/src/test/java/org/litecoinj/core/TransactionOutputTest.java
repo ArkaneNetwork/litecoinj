@@ -19,7 +19,7 @@ package org.litecoinj.core;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.LegacyAddress;
 import org.litecoinj.base.ScriptType;
@@ -86,11 +86,11 @@ public class TransactionOutputTest extends TestWithWallet {
     @Test
     public void testP2SHOutputScript() {
         String P2SHAddressString = "35b9vsyH1KoFT5a5KtrKusaCcPLkiSo1tU";
-        Address P2SHAddress = LegacyAddress.fromBase58(P2SHAddressString, BitcoinNetwork.MAINNET);
+        Address P2SHAddress = LegacyAddress.fromBase58(P2SHAddressString, LitecoinNetwork.MAINNET);
         Script script = ScriptBuilder.createOutputScript(P2SHAddress);
         Transaction tx = new Transaction();
         tx.addOutput(Coin.COIN, script);
-        assertEquals(P2SHAddressString, tx.getOutput(0).getScriptPubKey().getToAddress(BitcoinNetwork.MAINNET).toString());
+        assertEquals(P2SHAddressString, tx.getOutput(0).getScriptPubKey().getToAddress(LitecoinNetwork.MAINNET).toString());
     }
 
     @Test
@@ -107,10 +107,10 @@ public class TransactionOutputTest extends TestWithWallet {
         TransactionOutput p2pk = new TransactionOutput(null, Coin.COIN, myKey);
         assertEquals(Coin.valueOf(576), p2pk.getMinNonDustValue());
         TransactionOutput p2pkh = new TransactionOutput(null, Coin.COIN, myKey.toAddress(ScriptType.P2PKH,
-                BitcoinNetwork.TESTNET));
+                                                                                         LitecoinNetwork.TESTNET));
         assertEquals(Coin.valueOf(546), p2pkh.getMinNonDustValue());
         TransactionOutput p2wpkh = new TransactionOutput(null, Coin.COIN, myKey.toAddress(ScriptType.P2WPKH,
-                BitcoinNetwork.TESTNET));
+                                                                                          LitecoinNetwork.TESTNET));
         assertEquals(Coin.valueOf(294), p2wpkh.getMinNonDustValue());
     }
 
@@ -119,10 +119,10 @@ public class TransactionOutputTest extends TestWithWallet {
         TransactionOutput p2pk = new TransactionOutput(null, Coin.COIN, myKey);
         p2pk.toString();
         TransactionOutput p2pkh = new TransactionOutput(null, Coin.COIN, myKey.toAddress(ScriptType.P2PKH,
-                BitcoinNetwork.TESTNET));
+                                                                                         LitecoinNetwork.TESTNET));
         p2pkh.toString();
         TransactionOutput p2wpkh = new TransactionOutput(null, Coin.COIN, myKey.toAddress(ScriptType.P2WPKH,
-                BitcoinNetwork.TESTNET));
+                                                                                          LitecoinNetwork.TESTNET));
         p2wpkh.toString();
     }
 

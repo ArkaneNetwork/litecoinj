@@ -17,7 +17,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.Network;
 import org.litecoinj.core.*;
@@ -39,7 +39,7 @@ public class RefreshWallet {
         System.out.println(wallet.toString());
 
         // Set up the components and link them together.
-        final Network network = BitcoinNetwork.TESTNET;
+        final Network network = LitecoinNetwork.TESTNET;
         final NetworkParameters params = NetworkParameters.of(network);
         BlockStore blockStore = new MemoryBlockStore(params.getGenesisBlock());
         BlockChain chain = new BlockChain(params, wallet, blockStore);

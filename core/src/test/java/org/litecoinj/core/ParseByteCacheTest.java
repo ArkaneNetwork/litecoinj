@@ -17,7 +17,7 @@
 
 package org.litecoinj.core;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.base.internal.ByteUtils;
@@ -72,24 +72,24 @@ public class ParseByteCacheTest {
     public void setUp() throws Exception {
         TimeUtils.setMockClock(); // Use mock clock
         Context.propagate(new Context(100, Transaction.DEFAULT_TX_FEE, false, true));
-        Wallet wallet = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        Wallet wallet = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
         wallet.freshReceiveKey();
 
         resetBlockStore();
         
         Transaction tx1 = createFakeTx(TESTNET.network(),
                 valueOf(2, 0),
-                wallet.currentReceiveKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET));
+                wallet.currentReceiveKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET));
         
         // add a second input so can test granularity of byte cache.
         Transaction prevTx = new Transaction();
-        TransactionOutput prevOut = new TransactionOutput(prevTx, COIN, wallet.currentReceiveKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET));
+        TransactionOutput prevOut = new TransactionOutput(prevTx, COIN, wallet.currentReceiveKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET));
         prevTx.addOutput(prevOut);
         // Connect it.
         tx1.addInput(prevOut);
         
         Transaction tx2 = createFakeTx(TESTNET.network(), COIN,
-                new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET));
+                new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET));
 
         Block b1 = createFakeBlock(blockStore, BLOCK_HEIGHT_GENESIS, tx1, tx2).block;
 

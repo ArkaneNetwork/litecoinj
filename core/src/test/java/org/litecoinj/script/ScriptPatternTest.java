@@ -27,7 +27,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
 import static org.litecoinj.script.ScriptOpCodes.OP_CHECKMULTISIG;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

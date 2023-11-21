@@ -20,7 +20,7 @@ import org.litecoin.protocols.payments.Protos;
 import org.litecoin.protocols.payments.Protos.Payment;
 import org.litecoin.protocols.payments.Protos.PaymentACK;
 import org.litecoin.protocols.payments.Protos.PaymentRequest;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Address;
 import org.litecoinj.base.Coin;
@@ -53,7 +53,7 @@ public class PaymentProtocolTest {
 
     // static test data
     private static final Coin AMOUNT = Coin.SATOSHI;
-    private static final Address TO_ADDRESS = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+    private static final Address TO_ADDRESS = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
     private static final String MEMO = "memo";
     private static final String PAYMENT_URL = "https://example.com";
     private static final byte[] MERCHANT_DATA = { 0, 1, 2 };
@@ -132,7 +132,7 @@ public class PaymentProtocolTest {
         List<Transaction> transactions = new LinkedList<>();
         transactions.add(FakeTxBuilder.createFakeTx(TESTNET.network(), AMOUNT, TO_ADDRESS));
         Coin refundAmount = Coin.SATOSHI;
-        Address refundAddress = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address refundAddress = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         Payment payment = PaymentProtocol.createPaymentMessage(transactions, refundAmount, refundAddress, MEMO,
                 MERCHANT_DATA);
         byte[] paymentBytes = payment.toByteArray();

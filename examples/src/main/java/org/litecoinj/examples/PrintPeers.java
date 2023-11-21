@@ -16,7 +16,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.core.NetworkParameters;
 import org.litecoinj.core.Peer;
@@ -62,7 +62,7 @@ public class PrintPeers {
 
     public static void main(String[] args) throws Exception {
         BriefLogFormatter.init();
-        final Network network = BitcoinNetwork.MAINNET;
+        final Network network = LitecoinNetwork.MAINNET;
         final NetworkParameters params = NetworkParameters.of(network);
         System.out.println("=== DNS ===");
         printDNS(network);

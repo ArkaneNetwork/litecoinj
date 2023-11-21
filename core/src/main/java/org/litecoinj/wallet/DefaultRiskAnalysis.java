@@ -17,7 +17,7 @@
 
 package org.litecoinj.wallet;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.crypto.ECKey;
 import org.litecoinj.crypto.ECKey.ECDSASignature;
 import org.litecoinj.crypto.SignatureDecodeException;
@@ -207,7 +207,7 @@ public class DefaultRiskAnalysis implements RiskAnalysis {
     private Result analyzeIsStandard() {
         // The IsStandard rules don't apply on testnet, because they're just a safety mechanism and we don't want to
         // crush innovation with valueless test coins.
-        if (wallet != null && wallet.network() != BitcoinNetwork.MAINNET)
+        if (wallet != null && wallet.network() != LitecoinNetwork.MAINNET)
             return Result.OK;
 
         RuleViolation ruleViolation = isStandard(tx);

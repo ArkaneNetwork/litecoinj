@@ -16,7 +16,7 @@
 
 package org.litecoinj.wallet;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.core.AbstractBlockChain;
 import org.litecoinj.core.Block;
@@ -66,20 +66,20 @@ public class DefaultCoinSelectorTest extends TestWithWallet {
         Transaction t;
         t = new Transaction();
         t.getConfidence().setConfidenceType(TransactionConfidence.ConfidenceType.PENDING);
-        assertFalse(DefaultCoinSelector.isSelectable(t, BitcoinNetwork.TESTNET));
+        assertFalse(DefaultCoinSelector.isSelectable(t, LitecoinNetwork.TESTNET));
         t.getConfidence().setSource(TransactionConfidence.Source.SELF);
-        assertFalse(DefaultCoinSelector.isSelectable(t, BitcoinNetwork.TESTNET));
+        assertFalse(DefaultCoinSelector.isSelectable(t, LitecoinNetwork.TESTNET));
         t.getConfidence().markBroadcastBy(PeerAddress.simple(InetAddress.getByName("1.2.3.4"), TESTNET.getPort()));
-        assertTrue(DefaultCoinSelector.isSelectable(t, BitcoinNetwork.TESTNET));
+        assertTrue(DefaultCoinSelector.isSelectable(t, LitecoinNetwork.TESTNET));
         t.getConfidence().markBroadcastBy(PeerAddress.simple(InetAddress.getByName("5.6.7.8"), TESTNET.getPort()));
-        assertTrue(DefaultCoinSelector.isSelectable(t, BitcoinNetwork.TESTNET));
+        assertTrue(DefaultCoinSelector.isSelectable(t, LitecoinNetwork.TESTNET));
         t = new Transaction();
         t.getConfidence().setConfidenceType(TransactionConfidence.ConfidenceType.BUILDING);
-        assertTrue(DefaultCoinSelector.isSelectable(t, BitcoinNetwork.TESTNET));
+        assertTrue(DefaultCoinSelector.isSelectable(t, LitecoinNetwork.TESTNET));
         t = new Transaction();
         t.getConfidence().setConfidenceType(TransactionConfidence.ConfidenceType.PENDING);
         t.getConfidence().setSource(TransactionConfidence.Source.SELF);
-        assertTrue(DefaultCoinSelector.isSelectable(t, BitcoinNetwork.REGTEST));
+        assertTrue(DefaultCoinSelector.isSelectable(t, LitecoinNetwork.REGTEST));
     }
 
     @Test
@@ -137,7 +137,7 @@ public class DefaultCoinSelectorTest extends TestWithWallet {
         );
         t.getConfidence().setConfidenceType(TransactionConfidence.ConfidenceType.BUILDING);
 
-        CoinSelector selector = DefaultCoinSelector.get(BitcoinNetwork.TESTNET);
+        CoinSelector selector = DefaultCoinSelector.get(LitecoinNetwork.TESTNET);
         CoinSelection selection = selector.select(COIN.multiply(2), outputs);
 
         assertTrue(selection.outputs().size() == 4);

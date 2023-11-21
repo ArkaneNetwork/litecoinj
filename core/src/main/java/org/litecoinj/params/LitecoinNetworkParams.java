@@ -17,7 +17,7 @@
 
 package org.litecoinj.params;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.Stopwatch;
 import org.litecoinj.base.internal.ByteUtils;
 import org.litecoinj.core.BitcoinSerializer;
@@ -42,21 +42,21 @@ import static org.litecoinj.base.internal.Preconditions.checkState;
 /**
  * Parameters for Bitcoin-like networks.
  */
-public abstract class BitcoinNetworkParams extends NetworkParameters {
+public abstract class LitecoinNetworkParams extends NetworkParameters {
 
     /**
      * Scheme part for Bitcoin URIs.
-     * @deprecated Use {@link BitcoinNetwork#BITCOIN_SCHEME}
+     * @deprecated Use {@link LitecoinNetwork#BITCOIN_SCHEME}
      */
     @Deprecated
-    public static final String BITCOIN_SCHEME = BitcoinNetwork.BITCOIN_SCHEME;
+    public static final String BITCOIN_SCHEME = LitecoinNetwork.BITCOIN_SCHEME;
 
     /**
      * Block reward halving interval (number of blocks)
      */
     public static final int REWARD_HALVING_INTERVAL = 840_000;
 
-    private static final Logger log = LoggerFactory.getLogger(BitcoinNetworkParams.class);
+    private static final Logger log = LoggerFactory.getLogger(LitecoinNetworkParams.class);
 
     /** lazy-initialized by the first call to {@link NetworkParameters#getGenesisBlock()} */
     protected Block genesisBlock;
@@ -64,7 +64,7 @@ public abstract class BitcoinNetworkParams extends NetworkParameters {
     /**
      * No-args constructor
      */
-    public BitcoinNetworkParams(BitcoinNetwork network) {
+    public LitecoinNetworkParams(LitecoinNetwork network) {
         super(network);
         interval = INTERVAL;
         subsidyDecreaseBlockCount = REWARD_HALVING_INTERVAL;
@@ -76,14 +76,14 @@ public abstract class BitcoinNetworkParams extends NetworkParameters {
      * @return the network parameters for the given string ID or NULL if not recognized
      */
     @Nullable
-    public static BitcoinNetworkParams fromID(String id) {
-        if (id.equals(BitcoinNetwork.ID_MAINNET)) {
+    public static LitecoinNetworkParams fromID(String id) {
+        if (id.equals(LitecoinNetwork.ID_MAINNET)) {
             return MainNetParams.get();
-        } else if (id.equals(BitcoinNetwork.ID_TESTNET)) {
+        } else if (id.equals(LitecoinNetwork.ID_TESTNET)) {
             return TestNet3Params.get();
-        } else if (id.equals(BitcoinNetwork.ID_SIGNET)) {
+        } else if (id.equals(LitecoinNetwork.ID_SIGNET)) {
             return SigNetParams.get();
-        } else if (id.equals(BitcoinNetwork.ID_REGTEST)) {
+        } else if (id.equals(LitecoinNetwork.ID_REGTEST)) {
             return RegTestParams.get();
         } else {
             return null;
@@ -91,12 +91,12 @@ public abstract class BitcoinNetworkParams extends NetworkParameters {
     }
 
     /**
-     * Return network parameters for a {@link BitcoinNetwork} enum
+     * Return network parameters for a {@link LitecoinNetwork} enum
      * @param network the network
      * @return the network parameters for the given string ID
      * @throws IllegalArgumentException if unknown network
      */
-    public static BitcoinNetworkParams of(BitcoinNetwork network) {
+    public static LitecoinNetworkParams of(LitecoinNetwork network) {
         switch (network) {
             case MAINNET:
                 return MainNetParams.get();
@@ -239,7 +239,7 @@ public abstract class BitcoinNetworkParams extends NetworkParameters {
     @Override
     @Deprecated
     public Coin getMaxMoney() {
-        return BitcoinNetwork.MAX_MONEY;
+        return LitecoinNetwork.MAX_MONEY;
     }
 
     /**
@@ -259,7 +259,7 @@ public abstract class BitcoinNetworkParams extends NetworkParameters {
     @Override
     @Deprecated
     public String getUriScheme() {
-        return BitcoinNetwork.BITCOIN_SCHEME;
+        return LitecoinNetwork.BITCOIN_SCHEME;
     }
 
     @Override

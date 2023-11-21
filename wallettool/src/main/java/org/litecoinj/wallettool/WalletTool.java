@@ -17,7 +17,7 @@
 
 package org.litecoinj.wallettool;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.Sha256Hash;
 import org.litecoinj.base.internal.TimeUtils;
@@ -167,7 +167,7 @@ public class WalletTool implements Callable<Integer> {
             "                       If you omit both options, the creation time is being cleared (set to 0).%n")
     private String actionStr;
     @CommandLine.Option(names = "--net", description = "Which network to connect to. Valid values: ${COMPLETION-CANDIDATES}. Default: ${DEFAULT-VALUE}")
-    private BitcoinNetwork net = BitcoinNetwork.MAINNET;
+    private LitecoinNetwork net = LitecoinNetwork.MAINNET;
     @CommandLine.Option(names = "--debuglog", description = "Enables logging from the core library.")
     private boolean debugLog = false;
     @CommandLine.Option(names = "--force", description = "Overrides any safety checks on the requested action.")
@@ -1006,7 +1006,7 @@ public class WalletTool implements Callable<Integer> {
             peerGroup = new PeerGroup(net, chain);
         }
         peerGroup.setUserAgent("WalletTool", "1.0");
-        if (net == BitcoinNetwork.REGTEST)
+        if (net == LitecoinNetwork.REGTEST)
             peerGroup.setMinBroadcastConnections(1);
         peerGroup.addWallet(wallet);
         if (peersStr != null) {

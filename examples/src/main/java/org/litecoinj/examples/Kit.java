@@ -16,7 +16,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.core.*;
 import org.litecoinj.kits.WalletAppKit;
 
@@ -43,7 +43,7 @@ public class Kit {
         // Coins are worth nothing and you can get coins from a faucet.
         // 
         // For more information have a look at: https://bitcoinj.github.io/testing and https://bitcoin.org/en/developer-examples#testing-applications
-        BitcoinNetwork network = BitcoinNetwork.TESTNET;
+        LitecoinNetwork network = LitecoinNetwork.TESTNET;
 
         // Initialize and start a WalletAppKit. The kit handles all the boilerplate for us and is the easiest way to get everything up and running.
         // Look at the WalletAppKit documentation and its source to understand what's happening behind the scenes: https://github.com/bitcoinj/bitcoinj/blob/master/core/src/main/java/org/bitcoinj/kits/WalletAppKit.java

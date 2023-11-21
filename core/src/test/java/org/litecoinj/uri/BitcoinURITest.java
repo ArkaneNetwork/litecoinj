@@ -16,7 +16,7 @@
 
 package org.litecoinj.uri;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Address;
 import org.litecoinj.base.DefaultAddressParser;
 import org.litecoinj.base.LegacyAddress;
@@ -41,24 +41,24 @@ import static org.junit.Assert.fail;
 public class BitcoinURITest {
     private BitcoinURI testObject = null;
 
-    private static final BitcoinNetwork MAINNET = BitcoinNetwork.MAINNET;
-    private static final BitcoinNetwork TESTNET = BitcoinNetwork.TESTNET;
+    private static final LitecoinNetwork MAINNET = LitecoinNetwork.MAINNET;
+    private static final LitecoinNetwork TESTNET = LitecoinNetwork.TESTNET;
     private static final String MAINNET_GOOD_ADDRESS = "1KzTSfqjF2iKCduwz59nv2uqh1W2JsTxZH";
     private static final String MAINNET_GOOD_SEGWIT_ADDRESS = "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4";
-    private static final String BITCOIN_SCHEME = BitcoinNetwork.BITCOIN_SCHEME;
+    private static final String BITCOIN_SCHEME = LitecoinNetwork.BITCOIN_SCHEME;
 
     @Test
     public void of_anyNetwork() throws Exception {
         BitcoinURI uri1 = BitcoinURI.of("bitcoin:" + MAINNET_GOOD_ADDRESS);
-        assertEquals(BitcoinNetwork.MAINNET, uri1.getAddress().network());
+        assertEquals(LitecoinNetwork.MAINNET, uri1.getAddress().network());
         BitcoinURI uri2 = BitcoinURI.of("bitcoin:" + MAINNET_GOOD_SEGWIT_ADDRESS);
-        assertEquals(BitcoinNetwork.MAINNET, uri2.getAddress().network());
+        assertEquals(LitecoinNetwork.MAINNET, uri2.getAddress().network());
         BitcoinURI uri3 = BitcoinURI.of("bitcoin:mutDLVyes4YNWkL4j8g9oUsSUSTtnt13hP");
-        assertEquals(BitcoinNetwork.TESTNET, uri3.getAddress().network());
+        assertEquals(LitecoinNetwork.TESTNET, uri3.getAddress().network());
         BitcoinURI uri4 = BitcoinURI.of("bitcoin:tb1qn96rzewt04q0vtnh8lh0kelekkj2lpjh29lg6x");
-        assertEquals(BitcoinNetwork.TESTNET, uri4.getAddress().network());
+        assertEquals(LitecoinNetwork.TESTNET, uri4.getAddress().network());
         BitcoinURI uri5 = BitcoinURI.of("BITCOIN:TB1QN96RZEWT04Q0VTNH8LH0KELEKKJ2LPJH29LG6X");
-        assertEquals(BitcoinNetwork.TESTNET, uri5.getAddress().network());
+        assertEquals(LitecoinNetwork.TESTNET, uri5.getAddress().network());
     }
 
     @Test

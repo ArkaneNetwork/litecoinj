@@ -21,7 +21,7 @@ package org.litecoinj.script;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.ByteUtils;
 import org.litecoinj.base.Address;
@@ -103,7 +103,7 @@ public class ScriptTest {
         byte[] pubkeyBytes = ByteUtils.parseHex(pubkeyProg);
         Script pubkey = Script.parse(pubkeyBytes);
         assertEquals("DUP HASH160 PUSHDATA(20)[33e81a941e64cda12c6a299ed322ddbdd03f8d0e] EQUALVERIFY CHECKSIG", pubkey.toString());
-        Address toAddr = LegacyAddress.fromPubKeyHash(BitcoinNetwork.TESTNET, ScriptPattern.extractHashFromP2PKH(pubkey));
+        Address toAddr = LegacyAddress.fromPubKeyHash(LitecoinNetwork.TESTNET, ScriptPattern.extractHashFromP2PKH(pubkey));
         assertEquals("mkFQohBpy2HDXrCwyMrYL5RtfrmeiuuPY2", toAddr.toString());
     }
 
@@ -135,7 +135,7 @@ public class ScriptTest {
 
     @Test
     public void testP2SHOutputScript() {
-        Address p2shAddress = LegacyAddress.fromBase58("35b9vsyH1KoFT5a5KtrKusaCcPLkiSo1tU", BitcoinNetwork.MAINNET);
+        Address p2shAddress = LegacyAddress.fromBase58("35b9vsyH1KoFT5a5KtrKusaCcPLkiSo1tU", LitecoinNetwork.MAINNET);
         assertTrue(ScriptPattern.isP2SH(ScriptBuilder.createOutputScript(p2shAddress)));
     }
 
@@ -149,15 +149,15 @@ public class ScriptTest {
     @Test
     public void testCreateMultiSigInputScript() {
         // Setup transaction and signatures
-        ECKey key1 = DumpedPrivateKey.fromBase58(BitcoinNetwork.TESTNET, "cVLwRLTvz3BxDAWkvS3yzT9pUcTCup7kQnfT2smRjvmmm1wAP6QT").getKey();
-        ECKey key2 = DumpedPrivateKey.fromBase58(BitcoinNetwork.TESTNET, "cTine92s8GLpVqvebi8rYce3FrUYq78ZGQffBYCS1HmDPJdSTxUo").getKey();
-        ECKey key3 = DumpedPrivateKey.fromBase58(BitcoinNetwork.TESTNET, "cVHwXSPRZmL9adctwBwmn4oTZdZMbaCsR5XF6VznqMgcvt1FDDxg").getKey();
+        ECKey key1 = DumpedPrivateKey.fromBase58(LitecoinNetwork.TESTNET, "cVLwRLTvz3BxDAWkvS3yzT9pUcTCup7kQnfT2smRjvmmm1wAP6QT").getKey();
+        ECKey key2 = DumpedPrivateKey.fromBase58(LitecoinNetwork.TESTNET, "cTine92s8GLpVqvebi8rYce3FrUYq78ZGQffBYCS1HmDPJdSTxUo").getKey();
+        ECKey key3 = DumpedPrivateKey.fromBase58(LitecoinNetwork.TESTNET, "cVHwXSPRZmL9adctwBwmn4oTZdZMbaCsR5XF6VznqMgcvt1FDDxg").getKey();
         Script multisigScript = ScriptBuilder.createMultiSigOutputScript(2, Arrays.asList(key1, key2, key3));
         byte[] bytes = ByteUtils.parseHex("01000000013df681ff83b43b6585fa32dd0e12b0b502e6481e04ee52ff0fdaf55a16a4ef61000000006b483045022100a84acca7906c13c5895a1314c165d33621cdcf8696145080895cbf301119b7cf0220730ff511106aa0e0a8570ff00ee57d7a6f24e30f592a10cae1deffac9e13b990012102b8d567bcd6328fd48a429f9cf4b315b859a58fd28c5088ef3cb1d98125fc4e8dffffffff02364f1c00000000001976a91439a02793b418de8ec748dd75382656453dc99bcb88ac40420f000000000017a9145780b80be32e117f675d6e0ada13ba799bf248e98700000000");
         Transaction transaction = TESTNET.getDefaultSerializer().makeTransaction(ByteBuffer.wrap(bytes));
         TransactionOutput output = transaction.getOutput(1);
         Transaction spendTx = new Transaction();
-        Address address = LegacyAddress.fromBase58("n3CFiCmBXVt5d3HXKQ15EFZyhPz4yj5F3H", BitcoinNetwork.TESTNET);
+        Address address = LegacyAddress.fromBase58("n3CFiCmBXVt5d3HXKQ15EFZyhPz4yj5F3H", LitecoinNetwork.TESTNET);
         Script outputScript = ScriptBuilder.createOutputScript(address);
         spendTx.addOutput(output.getValue(), outputScript);
         spendTx.addInput(output);
@@ -469,29 +469,29 @@ public class ScriptTest {
     public void getToAddress() {
         // P2PK
         ECKey toKey = new ECKey();
-        Address toAddress = toKey.toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
-        assertEquals(toAddress, ScriptBuilder.createP2PKOutputScript(toKey).getToAddress(BitcoinNetwork.TESTNET, true));
+        Address toAddress = toKey.toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
+        assertEquals(toAddress, ScriptBuilder.createP2PKOutputScript(toKey).getToAddress(LitecoinNetwork.TESTNET, true));
         // pay to pubkey hash
-        assertEquals(toAddress, ScriptBuilder.createOutputScript(toAddress).getToAddress(BitcoinNetwork.TESTNET));
+        assertEquals(toAddress, ScriptBuilder.createOutputScript(toAddress).getToAddress(LitecoinNetwork.TESTNET));
         // pay to script hash
         Script p2shScript = ScriptBuilder.createP2SHOutputScript(new byte[20]);
-        Address scriptAddress = LegacyAddress.fromScriptHash(BitcoinNetwork.TESTNET,
-                ScriptPattern.extractHashFromP2SH(p2shScript));
-        assertEquals(scriptAddress, p2shScript.getToAddress(BitcoinNetwork.TESTNET));
+        Address scriptAddress = LegacyAddress.fromScriptHash(LitecoinNetwork.TESTNET,
+                                                             ScriptPattern.extractHashFromP2SH(p2shScript));
+        assertEquals(scriptAddress, p2shScript.getToAddress(LitecoinNetwork.TESTNET));
         // P2WPKH
-        toAddress = toKey.toAddress(ScriptType.P2WPKH, BitcoinNetwork.TESTNET);
-        assertEquals(toAddress, ScriptBuilder.createOutputScript(toAddress).getToAddress(BitcoinNetwork.TESTNET));
+        toAddress = toKey.toAddress(ScriptType.P2WPKH, LitecoinNetwork.TESTNET);
+        assertEquals(toAddress, ScriptBuilder.createOutputScript(toAddress).getToAddress(LitecoinNetwork.TESTNET));
         // P2WSH
         Script p2wshScript = ScriptBuilder.createP2WSHOutputScript(new byte[32]);
-        scriptAddress = SegwitAddress.fromHash(BitcoinNetwork.TESTNET, ScriptPattern.extractHashFromP2WH(p2wshScript));
-        assertEquals(scriptAddress, p2wshScript.getToAddress(BitcoinNetwork.TESTNET));
+        scriptAddress = SegwitAddress.fromHash(LitecoinNetwork.TESTNET, ScriptPattern.extractHashFromP2WH(p2wshScript));
+        assertEquals(scriptAddress, p2wshScript.getToAddress(LitecoinNetwork.TESTNET));
         // P2TR
-        toAddress = SegwitAddress.fromProgram(BitcoinNetwork.TESTNET, 1, new byte[32]);
-        assertEquals(toAddress, ScriptBuilder.createOutputScript(toAddress).getToAddress(BitcoinNetwork.TESTNET));
+        toAddress = SegwitAddress.fromProgram(LitecoinNetwork.TESTNET, 1, new byte[32]);
+        assertEquals(toAddress, ScriptBuilder.createOutputScript(toAddress).getToAddress(LitecoinNetwork.TESTNET));
     }
 
     @Test(expected = ScriptException.class)
     public void getToAddressNoPubKey() {
-        ScriptBuilder.createP2PKOutputScript(new ECKey()).getToAddress(BitcoinNetwork.TESTNET, false);
+        ScriptBuilder.createP2PKOutputScript(new ECKey()).getToAddress(LitecoinNetwork.TESTNET, false);
     }
 }

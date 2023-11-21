@@ -49,7 +49,7 @@ import static org.litecoinj.base.Coin.SMALLEST_UNIT_EXPONENT;
 import static org.litecoinj.base.Coin.ZERO;
 import static org.litecoinj.base.Coin.parseCoin;
 import static org.litecoinj.base.Coin.valueOf;
-import static org.litecoinj.base.BitcoinNetwork.MAX_MONEY;
+import static org.litecoinj.base.LitecoinNetwork.MAX_MONEY;
 import static org.litecoinj.utils.BtcAutoFormat.Style.CODE;
 import static org.litecoinj.utils.BtcAutoFormat.Style.SYMBOL;
 import static org.litecoinj.utils.BtcFixedFormat.REPEATING_DOUBLETS;

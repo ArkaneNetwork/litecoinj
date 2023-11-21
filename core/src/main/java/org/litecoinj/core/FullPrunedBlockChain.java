@@ -19,7 +19,7 @@ package org.litecoinj.core;
 
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.Sha256Hash;
-import org.litecoinj.params.BitcoinNetworkParams;
+import org.litecoinj.params.LitecoinNetworkParams;
 import org.litecoinj.script.Script;
 import org.litecoinj.script.Script.VerifyFlag;
 import org.litecoinj.script.ScriptPattern;
@@ -507,6 +507,6 @@ public class FullPrunedBlockChain extends AbstractBlockChain {
     }
 
     private Coin getBlockInflation(int height) {
-        return ((BitcoinNetworkParams) params).getBlockInflation(height);
+        return ((LitecoinNetworkParams) params).getBlockInflation(height);
     }
 }

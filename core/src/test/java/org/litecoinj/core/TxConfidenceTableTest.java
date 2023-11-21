@@ -17,7 +17,7 @@
 package org.litecoinj.core;
 
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Sha256Hash;
 import org.litecoinj.crypto.ECKey;
@@ -54,8 +54,8 @@ public class TxConfidenceTableTest {
         Context.propagate(context);
         table = context.getConfidenceTable();
 
-        Address to = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
-        Address change = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address to = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
+        Address change = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
 
         tx1 = FakeTxBuilder.createFakeTxWithChangeAddress(COIN, to, change);
         tx2 = FakeTxBuilder.createFakeTxWithChangeAddress(COIN, to, change);

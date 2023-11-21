@@ -17,7 +17,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Address;
@@ -45,7 +45,7 @@ import java.math.BigInteger;
 public class PrivateKeys {
     public static void main(String[] args) throws Exception {
         // TODO: Assumes main network not testnet. Make it selectable.
-        Network network = BitcoinNetwork.MAINNET;
+        Network network = LitecoinNetwork.MAINNET;
         NetworkParameters params = NetworkParameters.of(network);
         try {
             // Decode the private key from Satoshis Base58 variant. If 51 characters long then it's from Bitcoins

@@ -31,7 +31,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.litecoinj.base.BitcoinNetwork.*;
+import static org.litecoinj.base.LitecoinNetwork.*;
 
 /**
  * <p>Implementation of native segwit addresses. They are composed of two parts:</p>
@@ -69,13 +69,13 @@ public class SegwitAddress implements Address {
         TLTC(TESTNET, SIGNET),
         BCRT(REGTEST);
 
-        private final EnumSet<BitcoinNetwork> networks;
+        private final EnumSet<LitecoinNetwork> networks;
 
-        SegwitHrp(BitcoinNetwork n) {
+        SegwitHrp(LitecoinNetwork n) {
             networks = EnumSet.of(n);
         }
 
-        SegwitHrp(BitcoinNetwork n1, BitcoinNetwork n2) {
+        SegwitHrp(LitecoinNetwork n1, LitecoinNetwork n2) {
             networks = EnumSet.of(n1, n2);
         }
 
@@ -112,7 +112,7 @@ public class SegwitAddress implements Address {
          * @param network network enum
          * @return the corresponding enum
          */
-        public static SegwitHrp ofNetwork(BitcoinNetwork network) {
+        public static SegwitHrp ofNetwork(LitecoinNetwork network) {
             return Stream.of(SegwitHrp.values())
                     .filter(hrp -> hrp.networks.contains(network))
                     .findFirst()
@@ -126,10 +126,10 @@ public class SegwitAddress implements Address {
 
     private static Network normalizeNetwork(Network network) {
         // SegwitAddress does not distinguish between the SIGNET and TESTNET, normalize to TESTNET
-        if (network instanceof BitcoinNetwork) {
-            BitcoinNetwork bitcoinNetwork = (BitcoinNetwork) network;
-            if (bitcoinNetwork == BitcoinNetwork.SIGNET) {
-                return BitcoinNetwork.TESTNET;
+        if (network instanceof LitecoinNetwork) {
+            LitecoinNetwork litecoinNetwork = (LitecoinNetwork) network;
+            if (litecoinNetwork == LitecoinNetwork.SIGNET) {
+                return LitecoinNetwork.TESTNET;
             }
         }
         return network;
@@ -371,7 +371,7 @@ public class SegwitAddress implements Address {
     }
 
     /**
-     * Get the network this address works on. Use of {@link BitcoinNetwork} is preferred to use of {@link NetworkParameters}
+     * Get the network this address works on. Use of {@link LitecoinNetwork} is preferred to use of {@link NetworkParameters}
      * when you need to know what network an address is for.
      * @return the Network.
      */

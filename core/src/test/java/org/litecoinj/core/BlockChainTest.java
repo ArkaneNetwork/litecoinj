@@ -18,7 +18,7 @@
 package org.litecoinj.core;
 
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Sha256Hash;
@@ -75,10 +75,10 @@ public class BlockChainTest {
         BriefLogFormatter.initVerbose();
         TimeUtils.setMockClock(); // Use mock clock
         Context.propagate(new Context(100, Coin.ZERO, false, false));
-        testNetWallet = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        testNetWallet = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
         testNetStore = new MemoryBlockStore(TESTNET.getGenesisBlock());
         testNetChain = new BlockChain(TESTNET, testNetWallet, testNetStore);
-        coinbaseTo = testNetWallet.currentReceiveKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        coinbaseTo = testNetWallet.currentReceiveKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class BlockChainTest {
         // Quick check that we can actually receive coins.
         Transaction tx1 = createFakeTx(TESTNET.network(),
                                        COIN,
-                                       testNetWallet.currentReceiveKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET));
+                                       testNetWallet.currentReceiveKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET));
         Block b1 = createFakeBlock(testNetStore, height, tx1).block;
         testNetChain.add(b1);
         assertTrue(testNetWallet.getBalance().signum() > 0);
@@ -308,10 +308,10 @@ public class BlockChainTest {
         Context.propagate(new Context(100, Coin.ZERO, false, true));
         // Covers issue 166 in which transactions that depend on each other inside a block were not always being
         // considered relevant.
-        Address somebodyElse = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address somebodyElse = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         Block b1 = TESTNET.getGenesisBlock().createNextBlock(somebodyElse);
         ECKey key = testNetWallet.freshReceiveKey();
-        Address addr = key.toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address addr = key.toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         // Create a tx that gives us some coins, and another that spends it to someone else in the same block.
         Transaction t1 = FakeTxBuilder.createFakeTx(TESTNET.network(), COIN, addr);
         Transaction t2 = new Transaction();
@@ -330,12 +330,12 @@ public class BlockChainTest {
         // Check that a coinbase transaction is only available to spend after NetworkParameters.getSpendableCoinbaseDepth() blocks.
 
         // Create a second wallet to receive the coinbase spend.
-        Wallet wallet2 = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        Wallet wallet2 = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
         ECKey receiveKey = wallet2.freshReceiveKey();
         int height = 1;
         testNetChain.addWallet(wallet2);
 
-        Address addressToSendTo = receiveKey.toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address addressToSendTo = receiveKey.toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
 
         // Create a block, sending the coinbase to the coinbaseTo address (which is in the wallet).
         Block b1 = TESTNET.getGenesisBlock().createNextBlockWithCoinbase(Block.BLOCK_VERSION_GENESIS, testNetWallet.currentReceiveKey().getPubKey(), height++);

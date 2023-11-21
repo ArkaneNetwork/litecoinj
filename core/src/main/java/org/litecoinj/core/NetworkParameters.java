@@ -18,12 +18,12 @@
 package org.litecoinj.core;
 
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.Sha256Hash;
 import org.litecoinj.crypto.DumpedPrivateKey;
-import org.litecoinj.params.BitcoinNetworkParams;
+import org.litecoinj.params.LitecoinNetworkParams;
 import org.litecoinj.params.Networks;
 import org.litecoinj.protocols.payments.PaymentProtocol;
 import org.litecoinj.script.Script;
@@ -119,17 +119,17 @@ public abstract class NetworkParameters {
     
     /**
      * The maximum number of coins to be generated
-     * @deprecated Use {@link BitcoinNetwork#MAX_MONEY}
+     * @deprecated Use {@link LitecoinNetwork#MAX_MONEY}
      */
     @Deprecated
-    public static final long MAX_COINS = BitcoinNetwork.MAX_MONEY.longValue();
+    public static final long MAX_COINS = LitecoinNetwork.MAX_MONEY.longValue();
 
     /**
      * The maximum money to be generated
-     * @deprecated Use {@link BitcoinNetwork#MAX_MONEY}
+     * @deprecated Use {@link LitecoinNetwork#MAX_MONEY}
      */
     @Deprecated
-    public static final Coin MAX_MONEY = BitcoinNetwork.MAX_MONEY;
+    public static final Coin MAX_MONEY = LitecoinNetwork.MAX_MONEY;
 
     /**
      * A Java package style string acting as unique ID for these parameters
@@ -169,12 +169,12 @@ public abstract class NetworkParameters {
      * Return network parameters for a network id
      * @param id the network id
      * @return the network parameters for the given string ID or NULL if not recognized
-     * @deprecated Use {@link BitcoinNetworkParams#fromID(String)}
+     * @deprecated Use {@link LitecoinNetworkParams#fromID(String)}
      */
     @Deprecated
     @Nullable
     public static NetworkParameters fromID(String id) {
-        return BitcoinNetworkParams.fromID(id);
+        return LitecoinNetworkParams.fromID(id);
     }
 
     /**
@@ -186,8 +186,8 @@ public abstract class NetworkParameters {
      * @throws IllegalArgumentException if unknown network
      */
     public static NetworkParameters of(Network network) {
-        return (network instanceof BitcoinNetwork)
-                ? BitcoinNetworkParams.of((BitcoinNetwork) network)
+        return (network instanceof LitecoinNetwork)
+                ? LitecoinNetworkParams.of((LitecoinNetwork) network)
                 : Networks.find(network).orElseThrow(() -> new IllegalArgumentException("Unknown network"));
     }
 
