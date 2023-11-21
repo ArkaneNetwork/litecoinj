@@ -65,6 +65,7 @@ jobs:
           username: ${{ secrets.MAVEN_USERNAME }}
           password: ${{ secrets.MAVEN_PASSWORD }}
           groupId: 'network.arkane.blockchain-providers'
+          format: maven2
           artifactId: 'litecoinj'
           version: '0.17-SNAPSHOT'
           repository: 'maven-snapshots' # or 'maven-snapshots' based on your use case
