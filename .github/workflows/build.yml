@@ -48,8 +48,20 @@ jobs:
 
       - name: Dry Run with Gradle version ${{ matrix.gradle-version }}
         shell: bash
+        run: gradle build --dry-run
+      
+      - name: Run with Gradle version ${{ matrix.gradle-version }}
+        shell: bash
         run: gradle build
       
       - name: Version used
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
+      
+      - name: Publish to Nexus Repository
+        shell: bash
+        env:
+          NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          NEXUS_REPOSITORY_URL: ${{ secrets.NEXUS_URL }}/repository/maven-releases/'
+        run: gradle publish -PnexusRepositoryUrl=${NEXUS_REPOSITORY_URL}
