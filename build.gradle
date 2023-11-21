@@ -1,8 +1,3 @@
-plugins {
-    id 'java'
-    // Apply other necessary plugins here
-}
-
 import org.gradle.util.GradleVersion
 
 buildscript {
@@ -26,29 +21,4 @@ allprojects {
     }
 
     group = 'org.litecoinj'
-
-    // Apply the maven-publish plugin
-    apply plugin: 'maven-publish'
-
-    // Configure publishing
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                // Add other publication details as required
-            }
-        }
-        repositories {
-            maven {
-                name = 'Nexus'
-                url = uri(findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL') ?: "http://default-nexus-repo-url")
-                credentials {
-                    username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
-                    password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
-                }
-            }
-        }
-    }
 }
-
-// Additional configurations and task definitions (if any) go here
