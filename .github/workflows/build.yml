@@ -67,7 +67,7 @@ jobs:
           for jar in core/build/libs/*.jar; do
             filename=$(basename "$jar")
             version=$(echo $filename | sed -n 's/litecoinj-core-\(.*\)\.jar/\1/p')
-            nexus_url="http://$NEXUS_URL/repository/maven-snapshots/network/arkane/blockchain-providers/litecoinj/$version/$filename"
+            nexus_url="$NEXUS_URL/repository/maven-snapshots/network/arkane/blockchain-providers/litecoinj/$version/$filename"
             echo "Uploading $filename to $nexus_url"
             curl -u $MAVEN_USERNAME:$MAVEN_PASSWORD --upload-file $jar $nexus_url
           done
