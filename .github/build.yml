@@ -1,0 +1,61 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'release-**'
+      - 'hotfix-**'
+    paths-ignore:
+      - .github/**
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+########################
+# Build
+########################
+  build:
+    runs-on:
+      group: builders
+    permissions:
+      id-token: write
+      contents: write
+    strategy:
+      matrix:
+        java-version: [17]
+        include:
+          - java-version: 17
+            gradle-version: current
+          - java-version: 17
+            gradle-version: release-candidate
+    outputs:
+      sha_tag: ${{ steps.app_info.outputs.sha_tag }}
+      version_tag: ${{ steps.app_info.outputs.app_version }}
+      branch_tag: ${{ steps.app_info.outputs.branch_tag }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin' # AdoptOpenJDK
+
+      - name: Build with Gradle
+        env:
+          GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED: true
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build --stacktrace
+          gradle-version: ${{ matrix.gradle-version }}
+
+      - name: Dry Run with Gradle version ${{ matrix.gradle-version }}
+        shell: bash
+        run: gradle build --dry-run # just test build configuration
+      
+      - name: Version used
+        shell: bash
+      - run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
