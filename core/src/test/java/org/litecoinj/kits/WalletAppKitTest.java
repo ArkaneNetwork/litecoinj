@@ -22,7 +22,7 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
 
-import static org.litecoinj.base.BitcoinNetwork.REGTEST;
+import static org.litecoinj.base.LitecoinNetwork.REGTEST;
 import static org.litecoinj.base.ScriptType.P2WPKH;
 import static org.litecoinj.wallet.KeyChainGroupStructure.BIP43;
 

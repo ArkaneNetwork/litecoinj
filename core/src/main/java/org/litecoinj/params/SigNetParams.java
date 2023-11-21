@@ -16,7 +16,7 @@
 
 package org.litecoinj.params;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.ByteUtils;
 import org.litecoinj.core.Block;
 import org.litecoinj.base.Sha256Hash;
@@ -30,7 +30,7 @@ import static org.litecoinj.base.internal.Preconditions.checkState;
  * and testing of applications and new Bitcoin versions.</p>
  * <p>See <a href="https://github.com/bitcoin/bips/blob/master/bip-0325.mediawiki">BIP325</a>
  */
-public class SigNetParams extends BitcoinNetworkParams {
+public class SigNetParams extends LitecoinNetworkParams {
     public static final int TESTNET_MAJORITY_WINDOW = 100;
     public static final int TESTNET_MAJORITY_REJECT_BLOCK_OUTDATED = 75;
     public static final int TESTNET_MAJORITY_ENFORCE_BLOCK_UPGRADE = 51;
@@ -40,7 +40,7 @@ public class SigNetParams extends BitcoinNetworkParams {
     private static final Sha256Hash GENESIS_HASH = Sha256Hash.wrap("00000008819873e925422c1ff0f99f7cc9bbb232af63a077a480a3633bee1ef6");
 
     public SigNetParams() {
-        super(BitcoinNetwork.SIGNET);
+        super(LitecoinNetwork.SIGNET);
 
         targetTimespan = TARGET_TIMESPAN;
         maxTarget = ByteUtils.decodeCompactBits(Block.EASIEST_DIFFICULTY_TARGET);

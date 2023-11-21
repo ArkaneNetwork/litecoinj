@@ -16,7 +16,7 @@
 
 package org.litecoinj.wallet;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.core.NetworkParameters;
@@ -46,7 +46,7 @@ public interface KeyChainGroupStructure {
      */
     @Deprecated
     default HDPath accountPathFor(ScriptType outputScriptType) {
-        return accountPathFor(outputScriptType, BitcoinNetwork.MAINNET);
+        return accountPathFor(outputScriptType, LitecoinNetwork.MAINNET);
     }
 
     /**
@@ -119,13 +119,13 @@ public interface KeyChainGroupStructure {
 
     /**
      * Return coin type path component for a network id
-     * @param network network id string, eg. {@link BitcoinNetwork#ID_MAINNET}
+     * @param network network id string, eg. {@link LitecoinNetwork#ID_MAINNET}
      */
     static ChildNumber coinType(Network network) {
-        if (!(network instanceof BitcoinNetwork)) {
+        if (!(network instanceof LitecoinNetwork)) {
             throw new IllegalArgumentException("coinType: Unknown network");
         }
-        switch ((BitcoinNetwork) network) {
+        switch ((LitecoinNetwork) network) {
             case MAINNET:
                 return ChildNumber.COINTYPE_LTC;
             case TESTNET:

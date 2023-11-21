@@ -16,7 +16,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.InternalUtils;
 import org.litecoinj.wallet.DeterministicSeed;
@@ -34,7 +34,7 @@ public class BackupToMnemonicSeed {
 
     public static void main(String[] args) {
 
-        Wallet wallet = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        Wallet wallet = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
 
         DeterministicSeed seed = wallet.getKeyChainSeed();
         System.out.println("seed: " + seed.toString());

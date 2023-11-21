@@ -37,15 +37,15 @@ import static org.litecoinj.base.Coin.COIN;
  * Implementations should use the {@link #toString()} method for output and the {@link #fromString(String)}
  * method for input of network values.
  */
-public enum BitcoinNetwork implements Network {
+public enum LitecoinNetwork implements Network {
     /** The main Bitcoin network, known as {@code "mainnet"}, with {@code id} string {@code "org.bitcoin.production"}  */
-    MAINNET("org.bitcoin.production", "main", "prod"),
+    MAINNET("org.litecoin.production", "main", "prod"),
     /** The Bitcoin test network, known as {@code "testnet"}, with {@code id} string {@code "org.bitcoin.test"}  */
-    TESTNET("org.bitcoin.test", "test"),
+    TESTNET("org.litecoin.test", "test"),
     /** The Bitcoin signature-based test network, known as {@code "signet"}, with {@code id} string {@code "org.bitcoin.signet"}  */
-    SIGNET("org.bitcoin.signet", "sig"),
+    SIGNET("org.litecoin.signet", "sig"),
     /** A local Bitcoin regression test network, known as {@code "regtest"}, with {@code id} string {@code "org.bitcoin.regtest"}  */
-    REGTEST("org.bitcoin.regtest");
+    REGTEST("org.litecoin.regtest");
 
     /**
      * Scheme part for Bitcoin URIs.
@@ -77,9 +77,9 @@ public enum BitcoinNetwork implements Network {
     private final List<String> allNames;
 
     // Maps from names and alternateNames to BitcoinNetwork
-    private static final Map<String, BitcoinNetwork> stringToEnum = mergedNameMap();
+    private static final Map<String, LitecoinNetwork> stringToEnum = mergedNameMap();
 
-    BitcoinNetwork(String networkId, String... alternateNames) {
+    LitecoinNetwork(String networkId, String... alternateNames) {
         this.id = networkId;
         this.allNames = combine(this.toString(), alternateNames);
     }
@@ -192,7 +192,7 @@ public enum BitcoinNetwork implements Network {
      * @param nameString A name string
      * @return An {@code Optional} containing the matching enum or empty
      */
-    public static Optional<BitcoinNetwork> fromString(String nameString) {
+    public static Optional<LitecoinNetwork> fromString(String nameString) {
         return Optional.ofNullable(stringToEnum.get(nameString));
     }
 
@@ -201,22 +201,22 @@ public enum BitcoinNetwork implements Network {
      * @param idString specifies the network
      * @return An {@code Optional} containing the matching enum or empty
      */
-    public static Optional<BitcoinNetwork> fromIdString(String idString) {
+    public static Optional<LitecoinNetwork> fromIdString(String idString) {
         return Arrays.stream(values())
                 .filter(n -> n.id.equals(idString))
                 .findFirst();
     }
 
     // Create a Map that maps name Strings to networks for all instances
-    private static Map<String, BitcoinNetwork> mergedNameMap() {
+    private static Map<String, LitecoinNetwork> mergedNameMap() {
         return Stream.of(values())
                     .collect(HashMap::new,                  // Supply HashMaps as mutable containers
-                        BitcoinNetwork::accumulateNames,    // Accumulate one network into hashmap
-                        Map::putAll);                       // Combine two containers
+                             LitecoinNetwork::accumulateNames,    // Accumulate one network into hashmap
+                             Map::putAll);                       // Combine two containers
     }
 
     // Add allNames for this Network as keys to a map that can be used to find it
-    private static void accumulateNames(Map<String, BitcoinNetwork> map, BitcoinNetwork net) {
+    private static void accumulateNames(Map<String, LitecoinNetwork> map, LitecoinNetwork net) {
         net.allNames.forEach(name -> map.put(name, net));
     }
 

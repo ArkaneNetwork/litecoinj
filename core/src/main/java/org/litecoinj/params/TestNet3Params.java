@@ -17,7 +17,7 @@
 
 package org.litecoinj.params;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.ByteUtils;
 import org.litecoinj.core.Block;
 import org.litecoinj.core.NetworkParameters;
@@ -36,7 +36,7 @@ import static org.litecoinj.base.internal.Preconditions.checkState;
  * Parameters for the testnet, a separate public instance of Bitcoin that has relaxed rules suitable for development
  * and testing of applications and new Bitcoin versions.
  */
-public class TestNet3Params extends BitcoinNetworkParams {
+public class TestNet3Params extends LitecoinNetworkParams {
     public static final int TESTNET_MAJORITY_WINDOW = 100;
     public static final int TESTNET_MAJORITY_REJECT_BLOCK_OUTDATED = 75;
     public static final int TESTNET_MAJORITY_ENFORCE_BLOCK_UPGRADE = 51;
@@ -45,7 +45,7 @@ public class TestNet3Params extends BitcoinNetworkParams {
     private static final Sha256Hash GENESIS_HASH = Sha256Hash.wrap("4966625a4b2851d9fdee139e56211a0d88575f59ed816ff5e6a63deb4e3e29a0");
 
     public TestNet3Params() {
-        super(BitcoinNetwork.TESTNET);
+        super(LitecoinNetwork.TESTNET);
 
         targetTimespan = TARGET_TIMESPAN;
         maxTarget = ByteUtils.decodeCompactBits(0x1e0fffffL);

@@ -24,7 +24,7 @@ import java.security.SecureRandom;
 import java.util.EnumSet;
 import java.util.Objects;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.ByteUtils;
@@ -58,7 +58,7 @@ public class GenerateLowSTests {
 
     public static void main(final String[] argv)
             throws NoSuchAlgorithmException, IOException, VerificationException, SignatureDecodeException {
-        final Network network = BitcoinNetwork.MAINNET;
+        final Network network = LitecoinNetwork.MAINNET;
         final LocalTransactionSigner signer = new LocalTransactionSigner();
         final SecureRandom secureRandom = SecureRandom.getInstanceStrong();
         final ECKey key = new ECKey(secureRandom);

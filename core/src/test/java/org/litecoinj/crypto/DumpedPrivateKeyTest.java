@@ -19,8 +19,8 @@ package org.litecoinj.crypto;
 import org.litecoinj.base.Base58;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.exceptions.AddressFormatException;
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 
 import org.litecoinj.core.NetworkParameters;
 import org.junit.Test;

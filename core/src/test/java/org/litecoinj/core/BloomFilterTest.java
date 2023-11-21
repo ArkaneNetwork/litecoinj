@@ -18,7 +18,7 @@
 package org.litecoinj.core;
 
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.crypto.DumpedPrivateKey;
 import org.litecoinj.crypto.ECKey;
@@ -80,15 +80,15 @@ public class BloomFilterTest {
     public void walletTest() {
         Context.propagate(new Context());
 
-        DumpedPrivateKey privKey = DumpedPrivateKey.fromBase58(BitcoinNetwork.MAINNET, "5Kg1gnAjaLfKiwhhPpGS3QfRg2m6awQvaj98JCZBZQ5SuS2F15C");
+        DumpedPrivateKey privKey = DumpedPrivateKey.fromBase58(LitecoinNetwork.MAINNET, "5Kg1gnAjaLfKiwhhPpGS3QfRg2m6awQvaj98JCZBZQ5SuS2F15C");
 
-        Address addr = privKey.getKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.MAINNET);
+        Address addr = privKey.getKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.MAINNET);
         assertEquals("17Wx1GQfyPTNWpQMHrTwRSMTCAonSiZx9e", addr.toString());
 
-        KeyChainGroup group = KeyChainGroup.builder(BitcoinNetwork.MAINNET).build();
+        KeyChainGroup group = KeyChainGroup.builder(LitecoinNetwork.MAINNET).build();
         // Add a random key which happens to have been used in a recent generation
         group.importKeys(ECKey.fromPublicOnly(privKey.getKey()), ECKey.fromPublicOnly(ByteUtils.parseHex("03cb219f69f1b49468bd563239a86667e74a06fcba69ac50a08a5cbc42a5808e99")));
-        Wallet wallet = new Wallet(BitcoinNetwork.MAINNET, group);
+        Wallet wallet = new Wallet(LitecoinNetwork.MAINNET, group);
         wallet.commitTx(Transaction.read(ByteBuffer.wrap(ByteUtils.parseHex("01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0d038754030114062f503253482fffffffff01c05e559500000000232103cb219f69f1b49468bd563239a86667e74a06fcba69ac50a08a5cbc42a5808e99ac00000000"))));
 
         // We should have 2 per pubkey, and one for the P2PK output we have

@@ -16,7 +16,7 @@
 
 package org.litecoinj.base.utils;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -189,7 +189,7 @@ public class MonetaryFormatTest {
     public void sat() {
         assertEquals("0", format(ZERO, 8, 0));
         assertEquals("100000000", format(COIN, 8, 0));
-        assertEquals("2100000000000000", format(BitcoinNetwork.MAX_MONEY, 8, 0));
+        assertEquals("2100000000000000", format(LitecoinNetwork.MAX_MONEY, 8, 0));
     }
 
     private String format(Coin coin, int shift, int minDecimals, int... decimalGroups) {

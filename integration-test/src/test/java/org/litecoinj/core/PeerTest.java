@@ -18,7 +18,7 @@ package org.litecoinj.core;
 
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Uninterruptibles;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Sha256Hash;
@@ -694,7 +694,7 @@ public class PeerTest extends TestWithNetworkConnections {
         connectWithVersion(70001, Services.NODE_NETWORK);
         // Test that if we receive a relevant transaction that has a lock time, it doesn't result in a notification
         // until we explicitly opt in to seeing those.
-        Wallet wallet = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        Wallet wallet = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
         ECKey key = wallet.freshReceiveKey();
         peer.addWallet(wallet);
         final Transaction[] vtx = new Transaction[1];
@@ -740,7 +740,7 @@ public class PeerTest extends TestWithNetworkConnections {
     private void checkTimeLockedDependency(boolean shouldAccept) throws Exception {
         // Initial setup.
         connectWithVersion(70001, Services.NODE_NETWORK);
-        Wallet wallet = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        Wallet wallet = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
         ECKey key = wallet.freshReceiveKey();
         wallet.setAcceptRiskyTransactions(shouldAccept);
         peer.addWallet(wallet);
@@ -825,7 +825,7 @@ public class PeerTest extends TestWithNetworkConnections {
         connect();
         Transaction t1 = new Transaction();
         t1.addInput(new TransactionInput(t1, new byte[0], TransactionOutPoint.UNCONNECTED));
-        t1.addOutput(COIN, new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET));
+        t1.addOutput(COIN, new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET));
         Transaction t2 = new Transaction();
         t2.addInput(t1.getOutput(0));
         t2.addOutput(COIN, wallet.currentChangeAddress());

@@ -16,7 +16,7 @@
 
 package org.litecoinj.kits;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.core.Context;
 import org.litecoinj.wallet.KeyChainGroupStructure;
@@ -28,12 +28,12 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
 
 /**
- * WalletAppKit Functional/Integration test. Uses {@link BitcoinNetwork#TESTNET} so is {@code @Ignore}d.
+ * WalletAppKit Functional/Integration test. Uses {@link LitecoinNetwork#TESTNET} so is {@code @Ignore}d.
  * To run this test comment-out the {@code @Disabled} annotation.
  */
 @Disabled
 public class WalletAppKitTest {
-    static final BitcoinNetwork network = BitcoinNetwork.TESTNET;
+    static final LitecoinNetwork network = LitecoinNetwork.TESTNET;
     static final int MAX_CONNECTIONS = 3;
 
     WalletAppKit kit;

@@ -17,7 +17,7 @@
 package org.litecoinj.wallet;
 
 import com.google.common.annotations.VisibleForTesting;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.Network;
 import org.litecoinj.core.Transaction;
@@ -53,7 +53,7 @@ public class DefaultCoinSelector implements CoinSelector {
         ArrayList<TransactionOutput> sortedOutputs = new ArrayList<>(candidates);
         // When calculating the wallet balance, we may be asked to select all possible coins, if so, avoid sorting
         // them in order to improve performance.
-        if (!target.equals(BitcoinNetwork.MAX_MONEY)) {
+        if (!target.equals(LitecoinNetwork.MAX_MONEY)) {
             sortOutputs(sortedOutputs);
         }
         // Now iterate over the sorted outputs until we have got as close to the target as possible or a little
@@ -116,7 +116,7 @@ public class DefaultCoinSelector implements CoinSelector {
                type.equals(TransactionConfidence.ConfidenceType.PENDING) &&
                confidence.getSource().equals(TransactionConfidence.Source.SELF) &&
                // In regtest mode we expect to have only one peer, so we won't see transactions propagate.
-               (confidence.numBroadcastPeers() > 0 || network == BitcoinNetwork.REGTEST);
+               (confidence.numBroadcastPeers() > 0 || network == LitecoinNetwork.REGTEST);
     }
 
     public static CoinSelector get(Network network) {

@@ -59,8 +59,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 
 public class ECKeyTest {
     private static final Logger log = LoggerFactory.getLogger(ECKeyTest.class);

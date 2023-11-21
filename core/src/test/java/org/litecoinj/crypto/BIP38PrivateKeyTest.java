@@ -16,7 +16,7 @@
 
 package org.litecoinj.crypto;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.exceptions.AddressFormatException;
 import org.litecoinj.base.Base58;
@@ -25,8 +25,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 
 public class BIP38PrivateKeyTest {
 
@@ -120,8 +120,8 @@ public class BIP38PrivateKeyTest {
     @Test
     public void bitcoinpaperwallet_testnet() throws Exception {
         // values taken from bitcoinpaperwallet.com
-        BIP38PrivateKey encryptedKey = BIP38PrivateKey.fromBase58(BitcoinNetwork.TESTNET,
-                "6PRPhQhmtw6dQu6jD8E1KS4VphwJxBS9Eh9C8FQELcrwN3vPvskv9NKvuL");
+        BIP38PrivateKey encryptedKey = BIP38PrivateKey.fromBase58(LitecoinNetwork.TESTNET,
+                                                                  "6PRPhQhmtw6dQu6jD8E1KS4VphwJxBS9Eh9C8FQELcrwN3vPvskv9NKvuL");
         ECKey key = encryptedKey.decrypt("password");
         assertEquals("93MLfjbY6ugAsLeQfFY6zodDa8izgm1XAwA9cpMbUTwLkDitopg", key.getPrivateKeyEncoded(TESTNET)
                 .toString());
@@ -130,8 +130,8 @@ public class BIP38PrivateKeyTest {
     @Test
     public void bitaddress_testnet() throws Exception {
         // values taken from bitaddress.org
-        BIP38PrivateKey encryptedKey = BIP38PrivateKey.fromBase58(BitcoinNetwork.TESTNET,
-                "6PfMmVHn153N3x83Yiy4Nf76dHUkXufe2Adr9Fw5bewrunGNeaw2QCpifb");
+        BIP38PrivateKey encryptedKey = BIP38PrivateKey.fromBase58(LitecoinNetwork.TESTNET,
+                                                                  "6PfMmVHn153N3x83Yiy4Nf76dHUkXufe2Adr9Fw5bewrunGNeaw2QCpifb");
         ECKey key = encryptedKey.decrypt("password");
         assertEquals("91tCpdaGr4Khv7UAuUxa6aMqeN5GcPVJxzLtNsnZHTCndxkRcz2", key.getPrivateKeyEncoded(TESTNET)
                 .toString());

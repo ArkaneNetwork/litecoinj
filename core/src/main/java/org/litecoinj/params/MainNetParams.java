@@ -17,7 +17,7 @@
 
 package org.litecoinj.params;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.ByteUtils;
 import org.litecoinj.core.Block;
 import org.litecoinj.base.Sha256Hash;
@@ -29,7 +29,7 @@ import static org.litecoinj.base.internal.Preconditions.checkState;
 /**
  * Parameters for the main production network on which people trade goods and services.
  */
-public class MainNetParams extends BitcoinNetworkParams {
+public class MainNetParams extends LitecoinNetworkParams {
     public static final int MAINNET_MAJORITY_WINDOW = 1000;
     public static final int MAINNET_MAJORITY_REJECT_BLOCK_OUTDATED = 950;
     public static final int MAINNET_MAJORITY_ENFORCE_BLOCK_UPGRADE = 750;
@@ -38,7 +38,7 @@ public class MainNetParams extends BitcoinNetworkParams {
     private static final Sha256Hash GENESIS_HASH = Sha256Hash.wrap("12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2");
 
     public MainNetParams() {
-        super(BitcoinNetwork.MAINNET);
+        super(LitecoinNetwork.MAINNET);
 
         targetTimespan = TARGET_TIMESPAN;
         maxTarget = ByteUtils.decodeCompactBits(0x1e0fffffL);

@@ -18,7 +18,7 @@ package wallettemplate;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.walletfx.application.AppDelegate;
 
@@ -27,7 +27,7 @@ import org.litecoinj.walletfx.application.AppDelegate;
  * to {@link WalletTemplate}
  */
 public class Main extends Application {
-    private static final BitcoinNetwork network = BitcoinNetwork.MAINNET;
+    private static final LitecoinNetwork network = LitecoinNetwork.MAINNET;
     private static final ScriptType PREFERRED_OUTPUT_SCRIPT_TYPE = ScriptType.P2WPKH;
     private static final String APP_NAME = "WalletTemplate";
 

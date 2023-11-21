@@ -33,10 +33,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.REGTEST;
-import static org.litecoinj.base.BitcoinNetwork.SIGNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.REGTEST;
+import static org.litecoinj.base.LitecoinNetwork.SIGNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -45,7 +45,7 @@ public class LegacyAddressTest {
     @Test
     public void equalsContract() {
         EqualsVerifier.forClass(LegacyAddress.class)
-                .withPrefabValues(BitcoinNetwork.class, MAINNET, TESTNET)
+                .withPrefabValues(LitecoinNetwork.class, MAINNET, TESTNET)
                 .suppress(Warning.NULL_FIELDS)
                 .suppress(Warning.TRANSIENT_FIELDS)
                 .usingGetClass()

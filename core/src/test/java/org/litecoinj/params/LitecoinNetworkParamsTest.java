@@ -16,7 +16,7 @@
 
 package org.litecoinj.params;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.core.Block;
 import org.litecoinj.base.Coin;
 import org.junit.Test;
@@ -25,8 +25,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class BitcoinNetworkParamsTest {
-    private final BitcoinNetworkParams BITCOIN_PARAMS = new BitcoinNetworkParams(BitcoinNetwork.TESTNET) {
+public class LitecoinNetworkParamsTest {
+    private final LitecoinNetworkParams BITCOIN_PARAMS = new LitecoinNetworkParams(LitecoinNetwork.TESTNET) {
         @Override
         public Block getGenesisBlock() {
             return null;

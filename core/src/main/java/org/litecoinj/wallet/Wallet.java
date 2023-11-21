@@ -23,7 +23,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.math.IntMath;
 import com.google.protobuf.ByteString;
 import net.jcip.annotations.GuardedBy;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.exceptions.AddressFormatException;
 import org.litecoinj.base.internal.ByteUtils;
@@ -2269,7 +2269,7 @@ public class Wallet extends BaseTaggableObject
 
     /**
      * Determine if a transaction is <i>mature</i>. A coinbase transaction is <i>mature</i> if it has been confirmed at least
-     * {@link NetworkParameters#getSpendableCoinbaseDepth()} times. On {@link BitcoinNetwork#MAINNET} this value is {@code 100}.
+     * {@link NetworkParameters#getSpendableCoinbaseDepth()} times. On {@link LitecoinNetwork#MAINNET} this value is {@code 100}.
      * For purposes of this method, non-coinbase transactions are also considered <i>mature</i>.
      * @param tx the transaction to evaluate
      * @return {@code true} if it is a mature coinbase transaction or if it is not a coinbase transaction
@@ -3965,7 +3965,7 @@ public class Wallet extends BaseTaggableObject
         try {
             if (balanceType == BalanceType.AVAILABLE || balanceType == BalanceType.AVAILABLE_SPENDABLE) {
                 List<TransactionOutput> candidates = calculateAllSpendCandidates(true, balanceType == BalanceType.AVAILABLE_SPENDABLE);
-                CoinSelection selection = coinSelector.select(BitcoinNetwork.MAX_MONEY, candidates);
+                CoinSelection selection = coinSelector.select(LitecoinNetwork.MAX_MONEY, candidates);
                 return selection.totalValue();
             } else if (balanceType == BalanceType.ESTIMATED || balanceType == BalanceType.ESTIMATED_SPENDABLE) {
                 List<TransactionOutput> all = calculateAllSpendCandidates(false, balanceType == BalanceType.ESTIMATED_SPENDABLE);

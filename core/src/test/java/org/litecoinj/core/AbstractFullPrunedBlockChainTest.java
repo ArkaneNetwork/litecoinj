@@ -19,7 +19,7 @@ package org.litecoinj.core;
 
 import com.google.common.collect.Lists;
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.TimeUtils;
@@ -239,7 +239,7 @@ public abstract class AbstractFullPrunedBlockChainTest {
     @Test
     public void testFirst100KBlocks() throws Exception {
         File blockFile = new File(getClass().getResource("first-100k-blocks.dat").getFile());
-        BlockFileLoader loader = new BlockFileLoader(BitcoinNetwork.MAINNET, Arrays.asList(blockFile));
+        BlockFileLoader loader = new BlockFileLoader(LitecoinNetwork.MAINNET, Arrays.asList(blockFile));
         
         store = createStore(MAINNET, 10);
         resetStore(store);

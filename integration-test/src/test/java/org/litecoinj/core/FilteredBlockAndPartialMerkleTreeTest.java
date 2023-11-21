@@ -17,7 +17,7 @@
 
 package org.litecoinj.core;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.LegacyAddress;
 import org.litecoinj.base.ScriptType;
@@ -77,7 +77,7 @@ public class FilteredBlockAndPartialMerkleTreeTest extends TestWithPeerGroup {
                 BigInteger.ONE, 100_000));
         store.setChainHead(store.get(Sha256Hash.wrap("000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506")));
 
-        wallet = Wallet.createBasic(BitcoinNetwork.TESTNET);
+        wallet = Wallet.createBasic(LitecoinNetwork.TESTNET);
         wallet.importKeys(Arrays.asList(ECKey.fromPublicOnly(ByteUtils.parseHex("04b27f7e9475ccf5d9a431cb86d665b8302c140144ec2397fce792f4a4e7765fecf8128534eaa71df04f93c74676ae8279195128a1506ebf7379d23dab8fca0f63")),
                 ECKey.fromPublicOnly(ByteUtils.parseHex("04732012cb962afa90d31b25d8fb0e32c94e513ab7a17805c14ca4c3423e18b4fb5d0e676841733cb83abaf975845c9f6f2a8097b7d04f4908b18368d6fc2d68ec")),
                 ECKey.fromPublicOnly(ByteUtils.parseHex("04cfb4113b3387637131ebec76871fd2760fc430dd16de0110f0eb07bb31ffac85e2607c189cb8582ea1ccaeb64ffd655409106589778f3000fdfe3263440b0350")),
@@ -116,8 +116,8 @@ public class FilteredBlockAndPartialMerkleTreeTest extends TestWithPeerGroup {
         ECKey key2 = new ECKey();
         Transaction tx1 = FakeTxBuilder.createFakeTx(Coin.COIN,  key1);
         Transaction tx2 = FakeTxBuilder.createFakeTx(TESTNET.network(), Coin.FIFTY_COINS, key2.toAddress(ScriptType.P2PKH,
-                BitcoinNetwork.TESTNET));
-        Block block = FakeTxBuilder.makeSolvedTestBlock(TESTNET.getGenesisBlock(), LegacyAddress.fromBase58("msg2t2V2sWNd85LccoddtWysBTR8oPnkzW", BitcoinNetwork.TESTNET), tx1, tx2);
+                                                                                                         LitecoinNetwork.TESTNET));
+        Block block = FakeTxBuilder.makeSolvedTestBlock(TESTNET.getGenesisBlock(), LegacyAddress.fromBase58("msg2t2V2sWNd85LccoddtWysBTR8oPnkzW", LitecoinNetwork.TESTNET), tx1, tx2);
         BloomFilter filter = new BloomFilter(4, 0.1, 1);
         filter.insert(key1);
         filter.insert(key2);

@@ -17,7 +17,7 @@
 package org.litecoinj.base;
 
 /**
- * Interface for a generic Bitcoin-like cryptocurrency network. See {@link BitcoinNetwork} for the Bitcoin implementation.
+ * Interface for a generic Bitcoin-like cryptocurrency network. See {@link LitecoinNetwork} for the Bitcoin implementation.
  */
 public interface Network {
     /**
@@ -49,7 +49,7 @@ public interface Network {
     String segwitAddressHrp();
 
     /**
-     * The URI scheme for this network. See {@link BitcoinNetwork#uriScheme()}.
+     * The URI scheme for this network. See {@link LitecoinNetwork#uriScheme()}.
      * @return The URI scheme for this network
      */
     String uriScheme();

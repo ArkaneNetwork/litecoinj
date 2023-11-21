@@ -20,7 +20,7 @@ import com.google.common.util.concurrent.Service;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.PlatformUtils;
 import org.litecoinj.core.Context;
@@ -47,13 +47,13 @@ public abstract class WalletApplication implements AppDelegate {
     private static WalletApplication instance;
     private WalletAppKit walletAppKit;
     private final String applicationName;
-    private final BitcoinNetwork network;
+    private final LitecoinNetwork network;
     private final KeyChainGroupStructure keyChainGroupStructure;
     private final ScriptType preferredOutputScriptType;
     private final String walletFileName;
     private MainWindowController controller;
 
-    public WalletApplication(String applicationName, BitcoinNetwork network, ScriptType preferredOutputScriptType, KeyChainGroupStructure keyChainGroupStructure) {
+    public WalletApplication(String applicationName, LitecoinNetwork network, ScriptType preferredOutputScriptType, KeyChainGroupStructure keyChainGroupStructure) {
         instance = this;
         this.applicationName = applicationName;
         this.walletFileName = applicationName.replaceAll("[^a-zA-Z0-9.-]", "_") + "-" + suffixFromNetwork(network);
@@ -62,7 +62,7 @@ public abstract class WalletApplication implements AppDelegate {
         this.keyChainGroupStructure = keyChainGroupStructure;
     }
 
-    public WalletApplication(String applicationName, BitcoinNetwork network, ScriptType preferredOutputScriptType) {
+    public WalletApplication(String applicationName, LitecoinNetwork network, ScriptType preferredOutputScriptType) {
         this(applicationName, network, preferredOutputScriptType, KeyChainGroupStructure.BIP43);
     }
 
@@ -87,7 +87,7 @@ public abstract class WalletApplication implements AppDelegate {
         return NetworkParameters.of(network);
     }
 
-    public BitcoinNetwork network() {
+    public LitecoinNetwork network() {
         return network;
     }
 
@@ -169,7 +169,7 @@ public abstract class WalletApplication implements AppDelegate {
         };
         // Now configure and start the appkit. This will take a second or two - we could show a temporary splash screen
         // or progress widget to keep the user engaged whilst we initialise, but we don't.
-        if (network == BitcoinNetwork.REGTEST) {
+        if (network == LitecoinNetwork.REGTEST) {
             walletAppKit.connectToLocalHost();   // You should run a regtest mode bitcoind locally.
         }
         walletAppKit.setDownloadListener(controller.progressBarUpdater())
@@ -187,7 +187,7 @@ public abstract class WalletApplication implements AppDelegate {
         Runtime.getRuntime().exit(0);
     }
 
-    protected String suffixFromNetwork(BitcoinNetwork network) {
+    protected String suffixFromNetwork(LitecoinNetwork network) {
         switch(network) {
             case MAINNET:
                 return "main";

@@ -27,7 +27,7 @@ import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.core.NetworkParameters;
 import org.litecoinj.core.Transaction;
 import org.litecoinj.crypto.X509Utils;
-import org.litecoinj.params.BitcoinNetworkParams;
+import org.litecoinj.params.LitecoinNetworkParams;
 import org.litecoinj.params.MainNetParams;
 import org.litecoinj.params.RegTestParams;
 import org.litecoinj.params.SigNetParams;
@@ -444,7 +444,7 @@ public class PaymentProtocol {
      * @return network parameters for the given string paymentProtocolID or NULL if not recognized
      */
     @Nullable
-    public static BitcoinNetworkParams paramsFromPmtProtocolID(String pmtProtocolId) {
+    public static LitecoinNetworkParams paramsFromPmtProtocolID(String pmtProtocolId) {
         if (pmtProtocolId.equals(PAYMENT_PROTOCOL_ID_MAINNET)) {
             return MainNetParams.get();
         } else if (pmtProtocolId.equals(PAYMENT_PROTOCOL_ID_TESTNET)) {

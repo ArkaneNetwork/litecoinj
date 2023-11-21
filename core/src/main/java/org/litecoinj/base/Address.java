@@ -111,7 +111,7 @@ public interface Address extends Comparable<Address> {
     int compareTo(Address o);
 
     /**
-     * Get the network this address works on. Use of {@link BitcoinNetwork} is preferred to use of {@link NetworkParameters}
+     * Get the network this address works on. Use of {@link LitecoinNetwork} is preferred to use of {@link NetworkParameters}
      * when you need to know what network an address is for.
      * @return the Network.
      */

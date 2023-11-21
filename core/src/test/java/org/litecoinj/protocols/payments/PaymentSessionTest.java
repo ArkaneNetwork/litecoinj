@@ -19,7 +19,7 @@ package org.litecoinj.protocols.payments;
 
 import com.google.protobuf.ByteString;
 import org.litecoin.protocols.payments.Protos;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Address;
 import org.litecoinj.base.Coin;
@@ -93,7 +93,7 @@ public class PaymentSessionTest {
         tx.addInput(new TransactionInput(tx, outputToMe.getScriptBytes(), TransactionOutPoint.UNCONNECTED));
         ArrayList<Transaction> txns = new ArrayList<>();
         txns.add(tx);
-        Address refundAddr = serverKey.toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address refundAddr = serverKey.toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         paymentSession.sendPayment(txns, refundAddr, paymentMemo);
         assertEquals(1, paymentSession.getPaymentLog().size());
         assertEquals(simplePaymentUrl, paymentSession.getPaymentLog().get(0).getUrl().toString());

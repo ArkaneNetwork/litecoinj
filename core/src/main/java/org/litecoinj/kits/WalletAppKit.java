@@ -19,7 +19,7 @@ package org.litecoinj.kits;
 
 import com.google.common.io.Closeables;
 import com.google.common.util.concurrent.AbstractIdleService;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.PlatformUtils;
 import org.litecoinj.core.BlockChain;
@@ -86,7 +86,7 @@ import static org.litecoinj.base.internal.Preconditions.checkState;
 public class WalletAppKit extends AbstractIdleService implements Closeable {
     protected static final Logger log = LoggerFactory.getLogger(WalletAppKit.class);
 
-    protected final BitcoinNetwork network;
+    protected final LitecoinNetwork network;
     protected final NetworkParameters params;
     protected final ScriptType preferredOutputScriptType;
     protected final KeyChainGroupStructure structure;
@@ -113,25 +113,25 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
 
     /**
      * Creates a new WalletAppKit, with a newly created {@link Context}. Files will be stored in the given directory.
-     * @deprecated Use {@link #WalletAppKit(BitcoinNetwork, ScriptType, KeyChainGroupStructure, File, String)}
+     * @deprecated Use {@link #WalletAppKit(LitecoinNetwork, ScriptType, KeyChainGroupStructure, File, String)}
      */
     @Deprecated
     public WalletAppKit(NetworkParameters params, File directory, String filePrefix) {
-        this((BitcoinNetwork) params.network(), ScriptType.P2PKH, KeyChainGroupStructure.BIP32, directory, filePrefix);
+        this((LitecoinNetwork) params.network(), ScriptType.P2PKH, KeyChainGroupStructure.BIP32, directory, filePrefix);
     }
 
     /**
      * Creates a new WalletAppKit, with a newly created {@link Context}. Files will be stored in the given directory.
-     * @deprecated Use {@link #WalletAppKit(BitcoinNetwork, ScriptType, KeyChainGroupStructure, File, String)}
+     * @deprecated Use {@link #WalletAppKit(LitecoinNetwork, ScriptType, KeyChainGroupStructure, File, String)}
      */
     @Deprecated
     public WalletAppKit(NetworkParameters params, ScriptType preferredOutputScriptType,
             @Nullable KeyChainGroupStructure structure, File directory, String filePrefix) {
-        this((BitcoinNetwork) params.network(), preferredOutputScriptType, structure, directory, filePrefix);
+        this((LitecoinNetwork) params.network(), preferredOutputScriptType, structure, directory, filePrefix);
     }
 
     /**
-     * Creates a new WalletAppKit, on the specified {@link BitcoinNetwork}. Files will be stored in the given directory.
+     * Creates a new WalletAppKit, on the specified {@link LitecoinNetwork}. Files will be stored in the given directory.
      *
      * @param network The network the wallet connects to
      * @param preferredOutputScriptType The output script type (and therefore {@code Address} type) of the wallet
@@ -139,7 +139,7 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
      * @param directory The directory for creating {@code .wallet} and {@code .spvchain} files
      * @param filePrefix The base name for the {@code .wallet} and {@code .spvchain} files
      */
-    public WalletAppKit(BitcoinNetwork network, ScriptType preferredOutputScriptType,
+    public WalletAppKit(LitecoinNetwork network, ScriptType preferredOutputScriptType,
                         KeyChainGroupStructure structure, File directory, String filePrefix) {
         this.network = Objects.requireNonNull(network);
         this.params = NetworkParameters.of(this.network);
@@ -157,7 +157,7 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
      * @param filePrefix The base name for the {@code .wallet} and {@code .spvchain} files
      * @return the instance
      */
-    public static WalletAppKit launch(BitcoinNetwork network, File directory, String filePrefix) {
+    public static WalletAppKit launch(LitecoinNetwork network, File directory, String filePrefix) {
         return WalletAppKit.launch(network, directory, filePrefix, 0);
     }
 
@@ -170,7 +170,7 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
      * @param configurer Callback to allow configuring the kit before it is started
      * @return the instance
      */
-    public static WalletAppKit launch(BitcoinNetwork network, File directory, String filePrefix, Consumer<WalletAppKit> configurer) {
+    public static WalletAppKit launch(LitecoinNetwork network, File directory, String filePrefix, Consumer<WalletAppKit> configurer) {
         return WalletAppKit.launch(network, directory, filePrefix, configurer, 0);
     }
 
@@ -183,7 +183,7 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
      * @param maxConnections maximum number of peer connections.
      * @return the instance
      */
-    public static WalletAppKit launch(BitcoinNetwork network, File directory, String filePrefix, int maxConnections) {
+    public static WalletAppKit launch(LitecoinNetwork network, File directory, String filePrefix, int maxConnections) {
         return WalletAppKit.launch(network, directory, filePrefix, (c) -> {}, maxConnections);
     }
 
@@ -197,14 +197,14 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
      * @param maxConnections maximum number of peer connections.
      * @return the instance
      */
-    public static WalletAppKit launch(BitcoinNetwork network, File directory, String filePrefix, Consumer<WalletAppKit> configurer, int maxConnections) {
+    public static WalletAppKit launch(LitecoinNetwork network, File directory, String filePrefix, Consumer<WalletAppKit> configurer, int maxConnections) {
         WalletAppKit kit = new WalletAppKit(network,
                 ScriptType.P2WPKH,
                 KeyChainGroupStructure.BIP32,
                 directory,
                 filePrefix);
 
-        if (network == BitcoinNetwork.REGTEST) {
+        if (network == LitecoinNetwork.REGTEST) {
             // Regression test mode is designed for testing and development only, so there's no public network for it.
             // If you pick this mode, you're expected to be running a local "bitcoind -regtest" instance.
             kit.connectToLocalHost();
@@ -441,7 +441,7 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
             for (PeerAddress addr : peerAddresses) vPeerGroup.addAddress(addr);
             vPeerGroup.setMaxConnections(peerAddresses.length);
             peerAddresses = null;
-        } else if (params.network() != BitcoinNetwork.REGTEST) {
+        } else if (params.network() != LitecoinNetwork.REGTEST) {
             vPeerGroup.addPeerDiscovery(discovery != null ? discovery : new DnsDiscovery(params));
         }
         vChain.addWallet(vWallet);
@@ -577,7 +577,7 @@ public class WalletAppKit extends AbstractIdleService implements Closeable {
         awaitTerminated();
     }
 
-    public BitcoinNetwork network() {
+    public LitecoinNetwork network() {
         return network;
     }
 

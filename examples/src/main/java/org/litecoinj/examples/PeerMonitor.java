@@ -17,7 +17,7 @@
 
 package org.litecoinj.examples;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.core.AddressMessage;
 import org.litecoinj.base.Coin;
@@ -68,7 +68,7 @@ public class PeerMonitor {
     }
 
     private void setupNetwork() {
-        Network network = BitcoinNetwork.MAINNET;
+        Network network = LitecoinNetwork.MAINNET;
         peerGroup = new PeerGroup(network, null /* no chain */);
         peerGroup.setUserAgent("PeerMonitor", "1.0");
         peerGroup.setMaxConnections(4);

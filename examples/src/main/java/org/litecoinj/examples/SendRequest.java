@@ -17,7 +17,7 @@
 package org.litecoinj.examples;
 
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.core.*;
 import org.litecoinj.kits.WalletAppKit;
@@ -35,7 +35,7 @@ public class SendRequest {
     public static void main(String[] args) throws Exception {
 
         // We use the WalletAppKit that handles all the boilerplate for us. Have a look at the Kit.java example for more details.
-        WalletAppKit kit = WalletAppKit.launch(BitcoinNetwork.TESTNET, new File("."), "sendrequest-example");
+        WalletAppKit kit = WalletAppKit.launch(LitecoinNetwork.TESTNET, new File("."), "sendrequest-example");
 
         // How much coins do we want to send?
         // The Coin class represents a monetary Bitcoin value.

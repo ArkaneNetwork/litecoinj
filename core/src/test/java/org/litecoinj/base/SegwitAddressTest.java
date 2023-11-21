@@ -29,10 +29,10 @@ import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
-import static org.litecoinj.base.BitcoinNetwork.SIGNET;
-import static org.litecoinj.base.BitcoinNetwork.REGTEST;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.SIGNET;
+import static org.litecoinj.base.LitecoinNetwork.REGTEST;
 
 public class SegwitAddressTest {
     private static final AddressParser addressParser = new DefaultAddressParser();
@@ -40,7 +40,7 @@ public class SegwitAddressTest {
     @Test
     public void equalsContract() {
         EqualsVerifier.forClass(SegwitAddress.class)
-                .withPrefabValues(BitcoinNetwork.class, MAINNET, TESTNET)
+                .withPrefabValues(LitecoinNetwork.class, MAINNET, TESTNET)
                 .suppress(Warning.NULL_FIELDS)
                 .suppress(Warning.TRANSIENT_FIELDS)
                 .usingGetClass()
@@ -162,12 +162,12 @@ public class SegwitAddressTest {
 
     private static class AddressData {
         final String address;
-        final BitcoinNetwork expectedNetwork;
+        final LitecoinNetwork expectedNetwork;
         final String expectedScriptPubKey;
         final int expectedWitnessVersion;
 
-        AddressData(String address, BitcoinNetwork expectedNetwork, String expectedScriptPubKey,
-                int expectedWitnessVersion) {
+        AddressData(String address, LitecoinNetwork expectedNetwork, String expectedScriptPubKey,
+                    int expectedWitnessVersion) {
             this.address = address;
             this.expectedNetwork = expectedNetwork;
             this.expectedScriptPubKey = expectedScriptPubKey;

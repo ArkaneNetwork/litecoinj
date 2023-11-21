@@ -18,7 +18,7 @@
 package org.litecoinj.crypto;
 
 import org.litecoinj.base.Base58;
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
 
 import org.junit.Test;
 import org.slf4j.Logger;

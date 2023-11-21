@@ -24,59 +24,59 @@ import static org.junit.Assert.assertFalse;
 public class BitcoinNetworkTest {
     @Test
     public void valueOf() {
-        assertEquals(BitcoinNetwork.MAINNET, BitcoinNetwork.valueOf("MAINNET"));
-        assertEquals(BitcoinNetwork.TESTNET, BitcoinNetwork.valueOf("TESTNET"));
-        assertEquals(BitcoinNetwork.SIGNET, BitcoinNetwork.valueOf("SIGNET"));
-        assertEquals(BitcoinNetwork.REGTEST, BitcoinNetwork.valueOf("REGTEST"));
+        assertEquals(LitecoinNetwork.MAINNET, LitecoinNetwork.valueOf("MAINNET"));
+        assertEquals(LitecoinNetwork.TESTNET, LitecoinNetwork.valueOf("TESTNET"));
+        assertEquals(LitecoinNetwork.SIGNET, LitecoinNetwork.valueOf("SIGNET"));
+        assertEquals(LitecoinNetwork.REGTEST, LitecoinNetwork.valueOf("REGTEST"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void valueOf_alternate() {
-        BitcoinNetwork.valueOf("PROD");
+        LitecoinNetwork.valueOf("PROD");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void valueOf_notExisting() {
-        BitcoinNetwork.valueOf("xxx");
+        LitecoinNetwork.valueOf("xxx");
     }
 
     @Test
     public void fromString() {
-        assertEquals(BitcoinNetwork.MAINNET, BitcoinNetwork.fromString("mainnet").get());
-        assertEquals(BitcoinNetwork.MAINNET, BitcoinNetwork.fromString("main").get());
-        assertEquals(BitcoinNetwork.MAINNET, BitcoinNetwork.fromString("prod").get());
-        assertEquals(BitcoinNetwork.TESTNET, BitcoinNetwork.fromString("test").get());
-        assertEquals(BitcoinNetwork.TESTNET, BitcoinNetwork.fromString("testnet").get());
-        assertEquals(BitcoinNetwork.SIGNET, BitcoinNetwork.fromString("signet").get());
-        assertEquals(BitcoinNetwork.SIGNET, BitcoinNetwork.fromString("sig").get());
-        assertEquals(BitcoinNetwork.REGTEST, BitcoinNetwork.fromString("regtest").get());
+        assertEquals(LitecoinNetwork.MAINNET, LitecoinNetwork.fromString("mainnet").get());
+        assertEquals(LitecoinNetwork.MAINNET, LitecoinNetwork.fromString("main").get());
+        assertEquals(LitecoinNetwork.MAINNET, LitecoinNetwork.fromString("prod").get());
+        assertEquals(LitecoinNetwork.TESTNET, LitecoinNetwork.fromString("test").get());
+        assertEquals(LitecoinNetwork.TESTNET, LitecoinNetwork.fromString("testnet").get());
+        assertEquals(LitecoinNetwork.SIGNET, LitecoinNetwork.fromString("signet").get());
+        assertEquals(LitecoinNetwork.SIGNET, LitecoinNetwork.fromString("sig").get());
+        assertEquals(LitecoinNetwork.REGTEST, LitecoinNetwork.fromString("regtest").get());
     }
 
     @Test
     public void fromString_uppercase() {
-        assertFalse(BitcoinNetwork.fromString("MAIN").isPresent());
+        assertFalse(LitecoinNetwork.fromString("MAIN").isPresent());
     }
 
     @Test
     public void fromString_notExisting() {
-        assertFalse(BitcoinNetwork.fromString("xxx").isPresent());
+        assertFalse(LitecoinNetwork.fromString("xxx").isPresent());
     }
 
     @Test
     public void fromIdString() {
-        assertEquals(BitcoinNetwork.MAINNET, BitcoinNetwork.fromIdString("org.bitcoin.production").get());
-        assertEquals(BitcoinNetwork.TESTNET, BitcoinNetwork.fromIdString("org.bitcoin.test").get());
-        assertEquals(BitcoinNetwork.SIGNET, BitcoinNetwork.fromIdString("org.bitcoin.signet").get());
-        assertEquals(BitcoinNetwork.REGTEST, BitcoinNetwork.fromIdString("org.bitcoin.regtest").get());
+        assertEquals(LitecoinNetwork.MAINNET, LitecoinNetwork.fromIdString("org.litecoin.production").get());
+        assertEquals(LitecoinNetwork.TESTNET, LitecoinNetwork.fromIdString("org.litecoin.test").get());
+        assertEquals(LitecoinNetwork.SIGNET, LitecoinNetwork.fromIdString("org.litecoin.signet").get());
+        assertEquals(LitecoinNetwork.REGTEST, LitecoinNetwork.fromIdString("org.litecoin.regtest").get());
     }
 
     @Test
     public void fromIdString_uppercase() {
-        assertFalse(BitcoinNetwork.fromIdString("ORG.BITCOIN.PRODUCTION").isPresent());
+        assertFalse(LitecoinNetwork.fromIdString("ORG.LITECOIN.PRODUCTION").isPresent());
     }
 
     @Test
     public void fromIdString_notExisting() {
-        assertFalse(BitcoinNetwork.fromIdString("a.b.c").isPresent());
+        assertFalse(LitecoinNetwork.fromIdString("a.b.c").isPresent());
     }
 }

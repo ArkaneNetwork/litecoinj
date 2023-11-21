@@ -17,7 +17,7 @@
 
 package org.litecoinj.tools;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Sha256Hash;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.core.*;
@@ -59,7 +59,7 @@ import static org.litecoinj.base.internal.Preconditions.checkState;
 @CommandLine.Command(name = "build-checkpoints", usageHelpAutoWidth = true, sortOptions = false, description = "Create checkpoint files to use with CheckpointManager.")
 public class BuildCheckpoints implements Callable<Integer> {
     @CommandLine.Option(names = "--net", description = "Which network to connect to. Valid values: ${COMPLETION-CANDIDATES}. Default: ${DEFAULT-VALUE}")
-    private BitcoinNetwork net = BitcoinNetwork.MAINNET;
+    private LitecoinNetwork net = LitecoinNetwork.MAINNET;
     @CommandLine.Option(names = "--peer", description = "IP address/domain name for connection instead of localhost.")
     private String peer = null;
     @CommandLine.Option(names = "--days", description = "How many days to keep as a safety margin. Checkpointing will be done up to this many days ago.")
@@ -229,17 +229,17 @@ public class BuildCheckpoints implements Callable<Integer> {
 
         checkState(manager.numCheckpoints() == expectedSize);
 
-        if (params.network() == BitcoinNetwork.MAINNET) {
+        if (params.network() == LitecoinNetwork.MAINNET) {
             StoredBlock test = manager.getCheckpointBefore(Instant.ofEpochSecond(1390500000)); // Thu Jan 23 19:00:00 CET 2014
             checkState(test.getHeight() == 280224);
             checkState(test.getHeader().getHashAsString()
                     .equals("00000000000000000b5d59a15f831e1c45cb688a4db6b0a60054d49a9997fa34"));
-        } else if (params.network() == BitcoinNetwork.TESTNET) {
+        } else if (params.network() == LitecoinNetwork.TESTNET) {
             StoredBlock test = manager.getCheckpointBefore(Instant.ofEpochSecond(1390500000)); // Thu Jan 23 19:00:00 CET 2014
             checkState(test.getHeight() == 167328);
             checkState(test.getHeader().getHashAsString()
                     .equals("0000000000035ae7d5025c2538067fe7adb1cf5d5d9c31b024137d9090ed13a9"));
-        } else if (params.network() == BitcoinNetwork.SIGNET) {
+        } else if (params.network() == LitecoinNetwork.SIGNET) {
             StoredBlock test = manager.getCheckpointBefore(Instant.ofEpochSecond(1642000000)); // 2022-01-12
             checkState(test.getHeight() == 72576);
             checkState(test.getHeader().getHashAsString()

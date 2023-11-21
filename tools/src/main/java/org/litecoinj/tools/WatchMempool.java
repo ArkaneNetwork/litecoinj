@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.core.NetworkParameters;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 
 public class WatchMempool {
     private static final Logger log = LoggerFactory.getLogger(WatchMempool.class);
-    private static final Network NETWORK = BitcoinNetwork.MAINNET;
+    private static final Network NETWORK = LitecoinNetwork.MAINNET;
     private static final List<Transaction> NO_DEPS = Collections.emptyList();
     private static final Map<String, Integer> counters = new HashMap<>();
     private static final String TOTAL_KEY = "TOTAL";

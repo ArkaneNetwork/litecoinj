@@ -20,8 +20,8 @@ package org.litecoinj.base;
 
 import org.litecoinj.base.exceptions.AddressFormatException;
 import org.litecoinj.base.internal.ByteUtils;
-import org.litecoinj.crypto.ECKey;
 import org.litecoinj.core.NetworkParameters;
+import org.litecoinj.crypto.ECKey;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +31,10 @@ import java.util.EnumSet;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import static org.litecoinj.base.BitcoinNetwork.*;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.REGTEST;
+import static org.litecoinj.base.LitecoinNetwork.SIGNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 
 /**
  * <p>A Bitcoin address looks like 1MsScoe2fTJoq4ZPdQgqyhgWeoNamYPevy and is derived from an elliptic curve public key
@@ -52,7 +55,9 @@ public class LegacyAddress implements Address {
 
     protected final Network network;
     protected final byte[] bytes;
-    /** True if P2SH, false if P2PKH. */
+    /**
+     * True if P2SH, false if P2PKH.
+     */
     public final boolean p2sh;
 
     /**
@@ -60,12 +65,9 @@ public class LegacyAddress implements Address {
      * {@link #fromPubKeyHash(Network, byte[])}, {@link #fromScriptHash(Network, byte[])} or
      * {@link ECKey#toAddress(ScriptType, Network)}.
      *
-     * @param network
-     *            network this address is valid for
-     * @param p2sh
-     *            true if hash160 is hash of a script, false if it is hash of a pubkey
-     * @param hash160
-     *            20-byte hash of pubkey or script
+     * @param network network this address is valid for
+     * @param p2sh    true if hash160 is hash of a script, false if it is hash of a pubkey
+     * @param hash160 20-byte hash of pubkey or script
      */
     private LegacyAddress(Network network, boolean p2sh, byte[] hash160) throws AddressFormatException {
         this.network = normalizeNetwork(Objects.requireNonNull(network));
@@ -78,10 +80,10 @@ public class LegacyAddress implements Address {
 
     private static Network normalizeNetwork(Network network) {
         // LegacyAddress does not distinguish between the different testnet types, normalize to TESTNET
-        if (network instanceof BitcoinNetwork) {
-            BitcoinNetwork bitcoinNetwork = (BitcoinNetwork) network;
-            if (bitcoinNetwork == BitcoinNetwork.SIGNET || bitcoinNetwork == BitcoinNetwork.REGTEST) {
-                return BitcoinNetwork.TESTNET;
+        if (network instanceof LitecoinNetwork) {
+            LitecoinNetwork litecoinNetwork = (LitecoinNetwork) network;
+            if (litecoinNetwork == LitecoinNetwork.SIGNET || litecoinNetwork == LitecoinNetwork.REGTEST) {
+                return LitecoinNetwork.TESTNET;
             }
         }
         return network;
@@ -201,7 +203,7 @@ public class LegacyAddress implements Address {
     }
 
     /**
-     * Get the network this address works on. Use of {@link BitcoinNetwork} is preferred to use of {@link NetworkParameters}
+     * Get the network this address works on. Use of {@link LitecoinNetwork} is preferred to use of {@link NetworkParameters}
      * when you need to know what network an address is for.
      * @return the Network.
      */
@@ -298,25 +300,25 @@ public class LegacyAddress implements Address {
      * Address header of legacy P2PKH addresses for standard Bitcoin networks.
      */
     public enum AddressHeader {
-        X48(48, MAINNET),
+        X0(0, MAINNET),
         X111(111, TESTNET, REGTEST),
         X6F(0x6f, SIGNET);
 
         private final int headerByte;
-        private final EnumSet<BitcoinNetwork> networks;
+        private final EnumSet<LitecoinNetwork> networks;
 
         /**
          * @param network network to find enum for
          * @return the corresponding enum
          */
-        public static AddressHeader ofNetwork(BitcoinNetwork network) {
+        public static AddressHeader ofNetwork(LitecoinNetwork network) {
             return Stream.of(AddressHeader.values())
                     .filter(header -> header.networks.contains(network))
                     .findFirst()
                     .orElseThrow(IllegalStateException::new);
         }
 
-        AddressHeader(int headerByte, BitcoinNetwork first, BitcoinNetwork... rest) {
+        AddressHeader(int headerByte, LitecoinNetwork first, LitecoinNetwork... rest) {
             this.headerByte = headerByte;
             this.networks = EnumSet.of(first, rest);
         }
@@ -336,20 +338,20 @@ public class LegacyAddress implements Address {
         X58(58, TESTNET, SIGNET, REGTEST);
 
         private final int headerByte;
-        private final EnumSet<BitcoinNetwork> networks;
+        private final EnumSet<LitecoinNetwork> networks;
 
         /**
          * @param network network to find enum for
          * @return the corresponding enum
          */
-        public static P2SHHeader ofNetwork(BitcoinNetwork network) {
+        public static P2SHHeader ofNetwork(LitecoinNetwork network) {
             return Stream.of(P2SHHeader.values())
                     .filter(header -> header.networks.contains(network))
                     .findFirst()
                     .orElseThrow(IllegalStateException::new);
         }
 
-        P2SHHeader(int headerByte, BitcoinNetwork first, BitcoinNetwork... rest) {
+        P2SHHeader(int headerByte, LitecoinNetwork first, LitecoinNetwork... rest) {
             this.headerByte = headerByte;
             this.networks = EnumSet.of(first, rest);
         }

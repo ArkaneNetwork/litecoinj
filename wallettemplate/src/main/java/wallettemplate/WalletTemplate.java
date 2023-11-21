@@ -18,7 +18,7 @@ package wallettemplate;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.walletfx.application.WalletApplication;
 
@@ -30,7 +30,7 @@ import java.net.URL;
  */
 public class WalletTemplate extends WalletApplication {
 
-    public WalletTemplate(String applicationName, BitcoinNetwork network, ScriptType preferredOutputScriptType) {
+    public WalletTemplate(String applicationName, LitecoinNetwork network, ScriptType preferredOutputScriptType) {
         super(applicationName, network, preferredOutputScriptType);
     }
 

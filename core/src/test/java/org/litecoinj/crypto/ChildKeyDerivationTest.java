@@ -19,8 +19,8 @@ package org.litecoinj.crypto;
 
 import org.litecoinj.base.Network;
 import org.litecoinj.base.Sha256Hash;
-import static org.litecoinj.base.BitcoinNetwork.MAINNET;
-import static org.litecoinj.base.BitcoinNetwork.TESTNET;
+import static org.litecoinj.base.LitecoinNetwork.MAINNET;
+import static org.litecoinj.base.LitecoinNetwork.TESTNET;
 
 import org.junit.Test;
 

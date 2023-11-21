@@ -18,7 +18,7 @@
 package org.litecoinj.wallet;
 
 import com.google.protobuf.ByteString;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Address;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.internal.TimeUtils;
@@ -1071,8 +1071,8 @@ public class KeyChainGroup implements KeyBag {
             }
             log.info("Upgrading from P2PKH to P2WPKH deterministic keychain. Using seed: {}", seed);
             DeterministicKeyChain chain = DeterministicKeyChain.builder().seed(seed)
-                    .outputScriptType(ScriptType.P2WPKH)
-                    .accountPath(structure.accountPathFor(ScriptType.P2WPKH, BitcoinNetwork.MAINNET)).build();
+                                                               .outputScriptType(ScriptType.P2WPKH)
+                                                               .accountPath(structure.accountPathFor(ScriptType.P2WPKH, LitecoinNetwork.MAINNET)).build();
             if (seedWasEncrypted)
                 chain = chain.toEncrypted(Objects.requireNonNull(keyCrypter), aesKey);
             addAndActivateHDChain(chain);

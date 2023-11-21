@@ -19,7 +19,7 @@ package org.litecoinj.core;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.internal.TimeUtils;
 import org.litecoinj.crypto.ECKey;
@@ -169,7 +169,7 @@ public class TransactionBroadcastTest extends TestWithPeerGroup {
         assertEquals(FIFTY_COINS, wallet.getBalance());
 
         // Now create a spend, and expect the announcement on p1.
-        Address dest = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address dest = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         Wallet.SendResult sendResult = wallet.sendCoins(peerGroup, dest, COIN);
         assertFalse(sendResult.awaitRelayed().isDone());
         Transaction t1;
@@ -213,7 +213,7 @@ public class TransactionBroadcastTest extends TestWithPeerGroup {
         wallet.addTransactionConfidenceEventListener((wallet, tx) -> transactions[0] = tx);
 
         // Now create a spend, and expect the announcement on p1.
-        Address dest = new ECKey().toAddress(ScriptType.P2PKH, BitcoinNetwork.TESTNET);
+        Address dest = new ECKey().toAddress(ScriptType.P2PKH, LitecoinNetwork.TESTNET);
         Wallet.SendResult sendResult = wallet.sendCoins(peerGroup, dest, COIN);
         assertNotNull(sendResult.transaction());
         Threading.waitForUserCode();

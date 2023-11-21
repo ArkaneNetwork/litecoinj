@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.litecoinj.base.Address;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.Network;
 import org.litecoinj.base.ScriptType;
@@ -58,7 +58,7 @@ public class TransactionInputTest {
 
     @Test
     public void testStandardWalletDisconnect() throws Exception {
-        Wallet w = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        Wallet w = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
         Address a = w.currentReceiveAddress();
         Transaction tx1 = FakeTxBuilder.createFakeTxWithoutChangeAddress(Coin.COIN, a);
         w.receivePending(tx1, null);
@@ -81,14 +81,14 @@ public class TransactionInputTest {
 
     @Test
     public void testUTXOWalletDisconnect() throws Exception {
-        Wallet w = Wallet.createDeterministic(BitcoinNetwork.TESTNET, ScriptType.P2PKH);
+        Wallet w = Wallet.createDeterministic(LitecoinNetwork.TESTNET, ScriptType.P2PKH);
         Address a = w.currentReceiveAddress();
         final UTXO utxo = new UTXO(Sha256Hash.of(new byte[] { 1, 2, 3 }), 1, Coin.COIN, 0, false,
                 ScriptBuilder.createOutputScript(a));
         w.setUTXOProvider(new UTXOProvider() {
             @Override
             public Network network() {
-                return BitcoinNetwork.TESTNET;
+                return LitecoinNetwork.TESTNET;
             }
 
             @Override

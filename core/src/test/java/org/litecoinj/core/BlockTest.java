@@ -18,7 +18,7 @@
 package org.litecoinj.core;
 
 import com.google.common.io.ByteStreams;
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.Coin;
 import org.litecoinj.base.ScriptType;
 import org.litecoinj.base.Sha256Hash;
@@ -203,9 +203,9 @@ public class BlockTest {
         StoredBlock storedBlock = new StoredBlock(block169482, BigInteger.ONE, 169482); // Nonsense work - not used in test.
 
         // Create a wallet contain the miner's key that receives a spend from a coinbase.
-        ECKey miningKey = DumpedPrivateKey.fromBase58(BitcoinNetwork.MAINNET, MINING_PRIVATE_KEY).getKey();
+        ECKey miningKey = DumpedPrivateKey.fromBase58(LitecoinNetwork.MAINNET, MINING_PRIVATE_KEY).getKey();
         assertNotNull(miningKey);
-        Wallet wallet = Wallet.createDeterministic(BitcoinNetwork.MAINNET, ScriptType.P2PKH);
+        Wallet wallet = Wallet.createDeterministic(LitecoinNetwork.MAINNET, ScriptType.P2PKH);
         wallet.importKey(miningKey);
 
         // Initial balance should be zero by construction.

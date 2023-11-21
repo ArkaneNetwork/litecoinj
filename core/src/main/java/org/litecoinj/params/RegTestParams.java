@@ -17,7 +17,7 @@
 
 package org.litecoinj.params;
 
-import org.litecoinj.base.BitcoinNetwork;
+import org.litecoinj.base.LitecoinNetwork;
 import org.litecoinj.base.internal.ByteUtils;
 import org.litecoinj.core.Block;
 import org.litecoinj.base.Sha256Hash;
@@ -29,13 +29,13 @@ import static org.litecoinj.base.internal.Preconditions.checkState;
 /**
  * Network parameters for the regression test mode of bitcoind in which all blocks are trivially solvable.
  */
-public class RegTestParams extends BitcoinNetworkParams {
+public class RegTestParams extends LitecoinNetworkParams {
     private static final long GENESIS_TIME = 1296688602;
     private static final long GENESIS_NONCE = 2;
     private static final Sha256Hash GENESIS_HASH = Sha256Hash.wrap("0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206");
 
     public RegTestParams() {
-        super(BitcoinNetwork.REGTEST);
+        super(LitecoinNetwork.REGTEST);
 
         targetTimespan = TARGET_TIMESPAN;
         maxTarget = ByteUtils.decodeCompactBits(Block.EASIEST_DIFFICULTY_TARGET);
