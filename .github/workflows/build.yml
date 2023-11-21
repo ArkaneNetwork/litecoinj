@@ -69,7 +69,7 @@ jobs:
       - name: Nexus Repo Publish
         uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
         with:
-          serverUrl: ${{ secrets.NEXUS_URL }}
+          serverUrl: https://pkg.arkane.network
           username: ${{ secrets.MAVEN_USERNAME }}
           password: ${{ secrets.MAVEN_PASSWORD }}
           format: maven2
