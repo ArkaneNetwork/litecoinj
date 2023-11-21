@@ -54,15 +54,17 @@ jobs:
         shell: bash
         run: gradle clean assemble
       
-      - name: Debug
-        shell: bash
-        run: |
-          ls core/build/libs/*.jar
-          ls core/build/libs/
-
-      - name: Version used
+      - name: Version used for build
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
+
+      - name: Capture JAR filenames
+        id: capture_jars
+        shell: bash
+        run: |
+          echo "LITECOINJ_CORE_JAVADOC=$(ls core/build/libs/*-javadoc.jar)" >> $GITHUB_ENV
+          echo "LITECOINJ_CORE_SOURCES=$(ls core/build/libs/*-sources.jar)" >> $GITHUB_ENV
+          echo "LITECOINJ_CORE_JAR=$(ls core/build/libs/*[^-sources].jar)" >> $GITHUB_ENV
       
       - name: Nexus Repo Publish
         uses: sonatype-nexus-community/nexus-repo-github-action@master
@@ -72,5 +74,7 @@ jobs:
           password: ${{ secrets.MAVEN_PASSWORD }}
           format: maven2
           repository: maven-releases
-          assets: extension=jar
-          filename: core/build/libs/*.jar
+          assets: |
+            extension=jar;filename=${{ env.LITECOINJ_CORE_JAVADOC }}
+            extension=jar;filename=${{ env.LITECOINJ_CORE_SOURCES }}
+            extension=jar;filename=${{ env.LITECOINJ_CORE_JAR }}
