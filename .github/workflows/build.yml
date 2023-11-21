@@ -58,14 +58,14 @@ jobs:
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
 
-      - name: Capture JAR filenames
-        id: capture_jars
+      - name: Generate Asset String
+        id: generate_assets
         shell: bash
         run: |
-          echo "LITECOINJ_CORE_JAVADOC=$(ls core/build/libs/*-javadoc.jar)" >> $GITHUB_ENV
-          echo "LITECOINJ_CORE_SOURCES=$(ls core/build/libs/*-sources.jar)" >> $GITHUB_ENV
-          echo "LITECOINJ_CORE_JAR=$(ls core/build/libs/*[^-sources].jar)" >> $GITHUB_ENV
-      
+          jars=$(ls core/build/libs/*.jar)
+          asset_string=$(echo $jars | sed 's| | extension=jar;filename=|g')
+          echo "ASSET_STRING=extension=jar;filename=$asset_string" >> $GITHUB_ENV
+
       - name: Nexus Repo Publish
         uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
         with:
@@ -74,7 +74,4 @@ jobs:
           password: ${{ secrets.MAVEN_PASSWORD }}
           format: maven2
           repository: maven-snapshots
-          assets: |
-            extension=jar;filename=${{ env.LITECOINJ_CORE_JAVADOC }}
-            extension=jar;filename=${{ env.LITECOINJ_CORE_SOURCES }}
-            extension=jar;filename=${{ env.LITECOINJ_CORE_JAR }}
+          assets: ${{ env.ASSET_STRING }}
