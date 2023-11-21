@@ -29,11 +29,6 @@ jobs:
             gradle-version: current
           - java-version: 17
             gradle-version: release-candidate
-    outputs:
-      sha_tag: ${{ steps.app_info.outputs.sha_tag }}
-      version_tag: ${{ steps.app_info.outputs.app_version }}
-      branch_tag: ${{ steps.app_info.outputs.branch_tag }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
