@@ -1,24 +1,21 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    // Determine the protobuf plugin version based on the Gradle version
+    boolean isGradle7 = GradleVersion.current().compareTo(GradleVersion.version("7.0")) >= 0
+    def gradleProtobufVersion = isGradle7 ? "0.8.18" : "0.8.10"
+    dependencies {
+        classpath "com.google.protobuf:protobuf-gradle-plugin:${gradleProtobufVersion}"
+    }
+}
+
 plugins {
     id 'java'
     // Apply other necessary plugins here
 }
 
 import org.gradle.util.GradleVersion
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    // If using Gradle 7, use the compatible protobuf plugin, else use the one that works with oldest supported Gradle
-    boolean isGradle7 = GradleVersion.current().compareTo(GradleVersion.version("7.0")) >= 0
-    def gradleProtobufVersion = isGradle7 ? "0.8.18" : "0.8.10"
-    if (isGradle7) {
-        System.err.println "Warning: Using com.google.protobuf:protobuf-gradle-plugin:${gradleProtobufVersion} because ${GradleVersion.current()}"
-    }
-    dependencies {
-        classpath "com.google.protobuf:protobuf-gradle-plugin:${gradleProtobufVersion}"
-    }
-}
 
 allprojects {
     repositories {
@@ -35,7 +32,7 @@ allprojects {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
-                // Add other publication details as required
+                // Additional publication details as required
             }
         }
         repositories {
