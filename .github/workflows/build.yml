@@ -60,14 +60,14 @@ jobs:
         env:
           NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-        run: gradle clean assemble
+        run: gradle clean assemble --stacktrace
       
       - name: Publish to Nexus Repository
         shell: bash
         env:
           NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-        run: gradle publish
+        run: gradle publish --stacktrace
 
       - name: Version used for build
         shell: bash
