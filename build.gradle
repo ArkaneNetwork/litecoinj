@@ -23,12 +23,7 @@ plugins {
 group = 'org.litecoinj'
 version = '1.0.0' // Replace with your project's version
 
-allprojects {
-    repositories {
-        mavenCentral()
-    }
-
-    nexusPublishing {
+nexusPublishing {
         repositories {
             VenlyNexus {
                 nexusUrl = uri(findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL') ?: "http://default-nexus-repo-url")
@@ -37,5 +32,10 @@ allprojects {
                 password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
             }
         }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
     }
 }
