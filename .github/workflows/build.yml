@@ -83,7 +83,7 @@ jobs:
           serverUrl: https://pkg.arkane.network/repository/maven-private-snapshots/
           username: ${{ secrets.MAVEN_USERNAME }}
           password: ${{ secrets.MAVEN_PASSWORD }}
-          coordinates: groupId=network.arkane.blockchain-providers artifactId=litecoinj version=0.17-SNAPSHOT
+          coordinates: groupId=arkane-snapshots artifactId=litecoinj version=0.17-SNAPSHOT
           assets: |
             extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
             extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
