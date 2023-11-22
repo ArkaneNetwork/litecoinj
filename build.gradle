@@ -26,11 +26,21 @@ version = '1.0.0' // Replace with your project's version
 nexusPublishing {
         repositories {
             VenlyNexus {
-                nexusUrl = uri(findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL'))
-                snapshotRepositoryUrl = uri(findProperty('nexusSnapshotRepositoryUrl') ?: System.getenv('NEXUS_SNAPSHOT_REPOSITORY_URL'))
+                def repoUrl = findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL')
+                if (repoUrl == null) {
+                    throw new GradleException("Nexus repository URL is not specified")
+                }
+                nexusUrl = uri(repoUrl)
+
+                def snapshotRepoUrl = findProperty('nexusSnapshotRepositoryUrl') ?: System.getenv('NEXUS_SNAPSHOT_REPOSITORY_URL')
+                if (snapshotRepoUrl == null) {
+                    throw new GradleException("Nexus snapshot repository URL is not specified")
+                }
+                snapshotRepositoryUrl = uri(snapshotRepoUrl)
+
                 username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
                 password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
-            }
+            }   
         }
 }
 
