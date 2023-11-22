@@ -60,12 +60,12 @@ jobs:
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
         run: gradle clean assemble --stacktrace
       
-      - name: Publish to Nexus Repository
-        shell: bash
-        env:
-          NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-        run: gradle publish --stacktrace
+      # - name: Publish to Nexus Repository
+      #   shell: bash
+      #   env:
+      #     NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+      #     NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+      #   run: gradle publish --stacktrace
 
       - name: Version used for build
         shell: bash
@@ -77,18 +77,18 @@ jobs:
           ls
           pwd
       
-      # - name: Publish to Nexus Repository
-      #   uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
-      #   with:
-      #     serverUrl: ${{ secrets.NEXUS_URL }}
-      #     username: ${{ secrets.MAVEN_USERNAME }}
-      #     password: ${{ secrets.MAVEN_PASSWORD }}
-      #     coordinates: groupId=network.arkane.blockchain-providers artifactId=litecoinj version=0.17-SNAPSHOT
-      #     assets: |
-      #       extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
-      #       extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
-      #       extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
-      #     format: maven2
-      #     repository: 'maven-snapshots'
+      - name: Publish to Nexus Repository
+        uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
+        with:
+          serverUrl: https://pkg.arkane.network/
+          username: ${{ secrets.MAVEN_USERNAME }}
+          password: ${{ secrets.MAVEN_PASSWORD }}
+          coordinates: groupId=network.arkane.blockchain-providers artifactId=litecoinj version=0.17-SNAPSHOT
+          assets: |
+            extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
+            extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
+            extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
+          format: maven2
+          repository: 'maven-snapshots'
 
 
