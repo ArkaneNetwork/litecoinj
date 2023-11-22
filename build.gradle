@@ -28,15 +28,6 @@ allprojects {
         mavenCentral()
     }
 
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                // Add additional publication details if necessary
-            }
-        }
-    }
-
     nexusPublishing {
         repositories {
             myNexus {
