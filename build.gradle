@@ -30,7 +30,7 @@ allprojects {
 
     nexusPublishing {
         repositories {
-            myNexus {
+            VenlyNexus {
                 nexusUrl = uri(findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL') ?: "http://default-nexus-repo-url")
                 snapshotRepositoryUrl = uri(findProperty('nexusSnapshotRepositoryUrl') ?: System.getenv('NEXUS_SNAPSHOT_REPOSITORY_URL') ?: "http://default-nexus-snapshot-repo-url")
                 username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
