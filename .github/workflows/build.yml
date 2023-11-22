@@ -90,5 +90,6 @@ jobs:
             extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
           format: maven2
           repository: 'maven-snapshots'
+          filename: core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
 
 
