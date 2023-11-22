@@ -44,7 +44,7 @@ jobs:
           GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED: true
           NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-          NEXUS_REPOSITORY_URL: https://pkg.arkane.network/
+          NEXUS_REPOSITORY_URL: ${{ secrets.NEXUS_URL }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: ${{ matrix.gradle-version }}
@@ -54,7 +54,7 @@ jobs:
         env:
           NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-          NEXUS_REPOSITORY_URL: https://pkg.arkane.network/
+          NEXUS_REPOSITORY_URL: ${{ secrets.NEXUS_URL }}
         run: gradle build --dry-run
       
       - name: Run with Gradle version ${{ matrix.gradle-version }}
@@ -70,7 +70,7 @@ jobs:
         env:
           NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-          NEXUS_REPOSITORY_URL: https://pkg.arkane.network/
+          NEXUS_REPOSITORY_URL: ${{ secrets.NEXUS_URL }}
         run: gradle publish -PnexusRepositoryUrl=${NEXUS_REPOSITORY_URL}
 
       - name: Version used for build
