@@ -4,7 +4,6 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    // If using Gradle 7, use the compatible protobuf plugin, else use the one that works with oldest supported Gradle
     boolean isGradle7 = GradleVersion.current().compareTo(GradleVersion.version("7.0")) >= 0
     def gradleProtobufVersion = isGradle7 ? "0.8.18" : "0.8.10"
     if (isGradle7) {
@@ -15,10 +14,36 @@ buildscript {
     }
 }
 
+plugins {
+    id 'maven-publish'
+    id 'io.github.gradle-nexus.publish-plugin' version "version" // Replace "version" with the actual plugin version
+}
+
+group = 'org.litecoinj'
+version = '1.0.0' // Replace with your project's version
+
 allprojects {
     repositories {
         mavenCentral()
     }
 
-    group = 'org.litecoinj'
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                // Add additional publication details if necessary
+            }
+        }
+    }
+
+    nexusPublishing {
+        repositories {
+            myNexus {
+                nexusUrl = uri(findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL') ?: "http://default-nexus-repo-url")
+                snapshotRepositoryUrl = uri(findProperty('nexusSnapshotRepositoryUrl') ?: System.getenv('NEXUS_SNAPSHOT_REPOSITORY_URL') ?: "http://default-nexus-snapshot-repo-url")
+                username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
+                password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
+            }
+        }
+    }
 }
