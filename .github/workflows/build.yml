@@ -25,9 +25,9 @@ jobs:
         gradle-version: [current, release-candidate]
         include:
           - java-version: 17
-            gradle-version: current
+            gradle-version: 8.4
           - java-version: 17
-            gradle-version: release-candidate
+            gradle-version: current
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -78,10 +78,6 @@ jobs:
         run: |
           ls
           pwd
-      
-      
-      
-      
       
       # - name: Publish to Nexus Repository
       #   uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
