@@ -27,9 +27,9 @@ nexusPublishing {
         repositories {
             VenlyNexus {
                 // Release repository
-                nexusUrl = uri('https://pkg.arkane.network/repository/maven-private-releases/')
+                nexusUrl = uri('https://pkg.arkane.network/repository/maven-private-releases')
                 // Snapshot repository
-                snapshotRepositoryUrl = uri('https://pkg.arkane.network/repository/maven-private-snapshots/')
+                snapshotRepositoryUrl = uri('https://pkg.arkane.network/repository/maven-private-snapshots')
                 username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
                 password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
             }
