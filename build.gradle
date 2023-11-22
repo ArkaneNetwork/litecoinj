@@ -26,8 +26,8 @@ version = '1.0.0' // Replace with your project's version
 nexusPublishing {
         repositories {
             VenlyNexus {
-                nexusUrl = findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL')
-                snapshotRepositoryUrl = uri("${findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL')}/repository/maven-snapshots/")
+                nexusUrl = uri(findProperty('nexusRepositoryUrl') ?: System.getenv('NEXUS_REPOSITORY_URL'))
+                snapshotRepositoryUrl = uri(findProperty('nexusSnapshotRepositoryUrl') ?: System.getenv('NEXUS_SNAPSHOT_REPOSITORY_URL'))
                 username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
                 password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
             }
