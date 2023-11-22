@@ -57,7 +57,11 @@ jobs:
       - name: Version used for build
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
-
+      - name: Debug
+        shell: bash
+        run: |
+          ls
+          pwd
       - name: Publish to Nexus Repository
         uses: sonatype-nexus-community/nexus-repo-github-action@1.0.0
         with:
@@ -66,9 +70,9 @@ jobs:
           password: ${{ secrets.MAVEN_PASSWORD }}
           coordinates: groupId=network.arkane.blockchain-providers artifactId=litecoinj version=0.17-SNAPSHOT
           assets: |
-            extension=jar filename=./core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
-            extension=jar filename=./core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
-            extension=jar filename=./core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
+            extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-javadoc.jar
+            extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT-sources.jar
+            extension=jar filename=core/build/libs/litecoinj-core-0.17-SNAPSHOT.jar
           format: maven2
           repository: 'maven-snapshots'
 
