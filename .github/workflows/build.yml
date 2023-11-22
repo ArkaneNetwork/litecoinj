@@ -22,7 +22,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        gradle-version: [current, release-candidate]
+        gradle-version: [8.4, current]
         include:
           - java-version: 17
             gradle-version: 8.4
