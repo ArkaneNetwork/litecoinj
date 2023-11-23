@@ -21,19 +21,19 @@ plugins {
 }
 
 group = 'org.litecoinj'
-version = '1.0.0' // Replace with your project's version
+version = '1.17.0-SNAPSHOT' // Replace with your project's version
 
 nexusPublishing {
-        repositories {
-            VenlyNexus {
-                // Release repository
-                nexusUrl = uri('https://pkg.arkane.network/repository/maven-private-releases/')
-                // Snapshot repository
-                snapshotRepositoryUrl = uri('https://pkg.arkane.network/repository/maven-private-snapshots/')
-                username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
-                password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
-            }
+    repositories {
+        VenlyNexus {
+            // Release repository
+            nexusUrl = uri('https://pkg.arkane.network/repository/maven-private-releases/')
+            // Snapshot repository
+            snapshotRepositoryUrl = uri('https://pkg.arkane.network/repository/maven-private-snapshots/')
+            username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
+            password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
         }
+    }
 }
 
 allprojects {
