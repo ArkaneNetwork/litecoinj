@@ -4,6 +4,7 @@ image:https://coveralls.io/repos/bitcoinj/bitcoinj/badge.png?branch=master[Cover
 
 image::https://kiwiirc.com/buttons/irc.freenode.net/bitcoinj.png[Visit our IRC channel,link=https://kiwiirc.com/client/irc.freenode.net/bitcoinj]
 
+venly build: [![Build](https://github.com/ArkaneNetwork/litecoinj/actions/workflows/build.yml/badge.svg)](https://github.com/ArkaneNetwork/litecoinj/actions/workflows/build.yml)
 ### Welcome to bitcoinj
 
 The bitcoinj library is a Java implementation of the Bitcoin protocol, which allows it to maintain a wallet and send/receive transactions without needing a local copy of Bitcoin Core. It comes with full documentation and some example apps showing how to use it.
