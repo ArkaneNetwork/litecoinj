@@ -4,19 +4,19 @@ on:
     branches:
       - main
       - develop
-      - 'release-**'
-      - 'hotfix-**'
+      - "release-**"
+      - "hotfix-**"
     paths-ignore:
       - .github/**
   pull_request:
   workflow_dispatch:
 
 jobs:
-########################
-# Build
-########################
+  ########################
+  # Build
+  ########################
   build:
-    runs-on: ubuntu-latest
+    runs-on: docker-runner
     permissions:
       id-token: write
       contents: write
@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
-          distribution: 'temurin' # AdoptOpenJDK
+          distribution: "temurin" # AdoptOpenJDK
 
       - name: Build with Gradle
         id: setup-gradle
@@ -52,7 +52,7 @@ jobs:
           NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
         run: gradle build --dry-run
-      
+
       - name: Run with Gradle version ${{ matrix.gradle-version }}
         shell: bash
         env:
@@ -63,18 +63,16 @@ jobs:
       - name: Version used for build
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
-      
+
       - name: Debug
         shell: bash
         run: |
           ls
           pwd
-      
+
       - name: Publish to Nexus Repository
         shell: bash
         env:
           NEXUS_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
         run: gradle publish
-
-
