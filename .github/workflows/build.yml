@@ -10,11 +10,25 @@ on:
       - .github/**
   pull_request:
   workflow_dispatch:
+permissions:
+  actions: read
+  checks: read
+  contents: write
+  deployments: read
+  id-token: write
+  issues: read
+  discussions: read
+  packages: read
+  pages: read
+  pull-requests: read
+  repository-projects: read
+  security-events: read
+  statuses: read
 
 jobs:
-  ########################
-  # Build
-  ########################
+  # =====================================================
+  # Job: Deploy QA
+  # =====================================================
   build:
     runs-on: docker-runner
     permissions:
@@ -29,6 +43,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
