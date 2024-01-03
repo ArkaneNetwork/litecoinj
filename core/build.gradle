@@ -145,4 +145,16 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            name = 'nexus'
+            def releasesRepoUrl = 'https://pkg.arkane.network/repository/maven-releases/'
+            def snapshotsRepoUrl = 'https://pkg.arkane.network/repository/maven-snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
+                password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
+            }
+        }
+    }
 }

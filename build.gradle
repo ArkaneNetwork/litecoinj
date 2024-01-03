@@ -16,22 +16,28 @@ buildscript {
 
 plugins {
     id 'maven-publish'
-    id 'io.github.gradle-nexus.publish-plugin' version "1.3.0" // Replace "version" with the actual plugin version
     id 'java'
 }
 
 group = 'org.litecoinj'
 version = '1.17.0' // Replace with your project's version
 
-nexusPublishing {
+publishing {
+    publications {
+        litcoinj(MavenPublication) {
+            from components.java
+        }
+    }
     repositories {
-        VenlyNexus {
-            // Release repository
-            nexusUrl = uri('https://pkg.arkane.network/repository/maven-releases/')
-            // Snapshot repository
-            snapshotRepositoryUrl = uri('https://pkg.arkane.network/repository/maven-snapshots/')
-            username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
-            password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
+        maven {
+            name = 'nexus'
+            def releasesRepoUrl = 'https://pkg.arkane.network/repository/maven-releases/'
+            def snapshotsRepoUrl = 'https://pkg.arkane.network/repository/maven-snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
+                password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
+            }
         }
     }
 }
