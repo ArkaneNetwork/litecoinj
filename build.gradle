@@ -21,7 +21,7 @@ plugins {
 }
 
 group = 'org.litecoinj'
-version = '1.17.0-SNAPSHOT' // Replace with your project's version
+version = '1.17.0' // Replace with your project's version
 
 nexusPublishing {
     repositories {
