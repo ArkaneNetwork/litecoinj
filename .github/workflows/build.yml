@@ -30,7 +30,7 @@ jobs:
   # Job: Build
   # =====================================================
   build:
-    runs-on: docker-runner
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write
