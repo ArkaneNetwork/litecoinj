@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'org.litecoinj'
-version = '1.17.0-SNAPSHOT'
+version = '1.17.0'
 
 dependencies {
     api 'org.bouncycastle:bcprov-jdk15to18:1.72'
@@ -142,6 +142,18 @@ publishing {
 
             pom {
                 description = 'A Java Bitcoin library'
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'nexus'
+            def releasesRepoUrl = 'https://pkg.arkane.network/repository/maven-releases/'
+            def snapshotsRepoUrl = 'https://pkg.arkane.network/repository/maven-snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = findProperty('nexusUsername') ?: System.getenv('NEXUS_USERNAME')
+                password = findProperty('nexusPassword') ?: System.getenv('NEXUS_PASSWORD')
             }
         }
     }
