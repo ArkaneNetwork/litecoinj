@@ -1,18 +1,15 @@
-name: Build
+name: 🏗️ Build
 on:
   push:
-    branches:
-      - main
-      - develop
-      - "release-**"
-      - "hotfix-**"
     paths-ignore:
       - .github/**
   pull_request:
   workflow_dispatch:
+env:
+  AWS_REGION: "eu-west-1"
 permissions:
   actions: read
-  checks: read
+  checks: write
   contents: write
   deployments: read
   id-token: write
@@ -24,7 +21,7 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
-
+run-name: 🏗️ Build ${{ github.ref_name	}}
 jobs:
   # =====================================================
   # Job: Build
@@ -80,12 +77,6 @@ jobs:
       - name: Version used for build
         shell: bash
         run: echo "The version was ${{ steps.setup-gradle.outputs.gradle-version }}"
-
-      - name: Debug
-        shell: bash
-        run: |
-          ls
-          pwd
 
       - name: Publish to Nexus Repository
         shell: bash
