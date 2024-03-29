@@ -38,7 +38,7 @@ jobs:
           - java-version: 17
             gradle-version: 8.4
     steps:
-      - name: Checkout code
+      - name: ✅ Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
