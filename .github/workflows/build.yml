@@ -5,6 +5,9 @@ on:
       - .github/**
   pull_request:
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 env:
   AWS_REGION: "eu-west-1"
 permissions:
